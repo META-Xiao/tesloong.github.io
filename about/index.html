@@ -181,7 +181,8 @@ btf.addGlobalFn('pjaxSend', () => {
       let statistic = []
       for (let i = 0; i < num.length; i++) {
           if (!statisticEl) return
-          if (i == 0 || i == num.length - 1) continue;
+          //- if (i == 0 || i == num.length - 1) continue;
+          if (i == 0) continue; //设置为不显示 最近活跃访客
           statisticEl.innerHTML += '<div><span>' + title[i] + '</span><span id='+ title[i] + '>' + num[i] + '</span></div>'
           queueMicrotask(()=> {
             statistic.push(new CountUp(title[i], 0, num[i], 0, 2, {
