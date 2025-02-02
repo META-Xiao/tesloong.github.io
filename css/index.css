@@ -7795,7 +7795,9 @@ blockquote.pullquote.right {
 ,#aside-content .card-widget
 ,#post
 ,#page
-,#archive{
+,#archive
+,#tag
+,#category{
   background: rgba(255, 255, 255, .8); /* 设置背景颜色 */
   box-shadow: 0 5px 6px -5px rgba(133, 133, 133, .6); /* 设置阴影效果 */
   backdrop-filter: blur(7px); /* 添加毛玻璃特效 */
@@ -7805,7 +7807,9 @@ blockquote.pullquote.right {
 ,[data-theme="dark"] #post
 ,[data-theme="dark"] #aside-content .card-widget
 ,[data-theme="dark"] #page
-,[data-theme="dark"] #archive{
+,[data-theme="dark"] #archive
+,[data-theme="dark"] #tag
+,[data-theme="dark"] #category{
   background: rgba(24, 24, 30, .5); 
   backdrop-filter: blur(10px) brightness(1.2); 
   box-shadow: none; /* 移除阴影效果 */
