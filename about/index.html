@@ -1,0 +1,317 @@
+<!DOCTYPE html><html lang="zh-CN" data-theme="dark"><head><meta charset="UTF-8"><meta http-equiv="X-UA-Compatible" content="IE=edge"><meta name="viewport" content="width=device-width, initial-scale=1.0,viewport-fit=cover"><title>关于 | 浮生若梦</title><meta name="author" content="Meta Xiao"><meta name="copyright" content="Meta Xiao"><meta name="format-detection" content="telephone=no"><meta name="theme-color" content="#0d0d0d"><meta name="description" content="学习知识，记录生活，分享感悟">
+<meta property="og:type" content="website">
+<meta property="og:title" content="关于">
+<meta property="og:url" content="https://www.teslongxiao.cn/about/index.html">
+<meta property="og:site_name" content="浮生若梦">
+<meta property="og:description" content="学习知识，记录生活，分享感悟">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="https://i.postimg.cc/xTR6mkG9/1737896078867.gif">
+<meta property="article:published_time" content="2025-01-25T09:24:51.000Z">
+<meta property="article:modified_time" content="2025-03-04T15:41:27.981Z">
+<meta property="article:author" content="Meta Xiao">
+<meta property="article:tag" content="study,life,share,techolgy,electronic,programming">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://i.postimg.cc/xTR6mkG9/1737896078867.gif"><link rel="shortcut icon" href="https://i.postimg.cc/4xJYBWXS/image.png"><link rel="canonical" href="https://www.teslongxiao.cn/about/index.html"><link rel="preconnect" href="//cdn.jsdelivr.net"/><link rel="preconnect" href="//busuanzi.ibruce.info"/><meta name="google-site-verification" content="Qi_9CrV7lldy8VD7RIVN3Nb62FP7EmhAITFqplx0mzo"/><meta name="baidu-site-verification" content="codeva-nF4CVmePFG"/><link rel="stylesheet" href="/css/index.css"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free/css/all.min.css"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/node-snackbar/dist/snackbar.min.css" media="print" onload="this.media='all'"><script>
+    (() => {
+      
+    const saveToLocal = {
+      set: (key, value, ttl) => {
+        if (!ttl) return
+        const expiry = Date.now() + ttl * 86400000
+        localStorage.setItem(key, JSON.stringify({ value, expiry }))
+      },
+      get: key => {
+        const itemStr = localStorage.getItem(key)
+        if (!itemStr) return undefined
+        const { value, expiry } = JSON.parse(itemStr)
+        if (Date.now() > expiry) {
+          localStorage.removeItem(key)
+          return undefined
+        }
+        return value
+      }
+    }
+
+    window.btf = {
+      saveToLocal,
+      getScript: (url, attr = {}) => new Promise((resolve, reject) => {
+        const script = document.createElement('script')
+        script.src = url
+        script.async = true
+        Object.entries(attr).forEach(([key, val]) => script.setAttribute(key, val))
+        script.onload = script.onreadystatechange = () => {
+          if (!script.readyState || /loaded|complete/.test(script.readyState)) resolve()
+        }
+        script.onerror = reject
+        document.head.appendChild(script)
+      }),
+      getCSS: (url, id) => new Promise((resolve, reject) => {
+        const link = document.createElement('link')
+        link.rel = 'stylesheet'
+        link.href = url
+        if (id) link.id = id
+        link.onload = link.onreadystatechange = () => {
+          if (!link.readyState || /loaded|complete/.test(link.readyState)) resolve()
+        }
+        link.onerror = reject
+        document.head.appendChild(link)
+      }),
+      addGlobalFn: (key, fn, name = false, parent = window) => {
+        if (!false && key.startsWith('pjax')) return
+        const globalFn = parent.globalFn || {}
+        globalFn[key] = globalFn[key] || {}
+        globalFn[key][name || Object.keys(globalFn[key]).length] = fn
+        parent.globalFn = globalFn
+      }
+    }
+  
+      
+      const activateDarkMode = () => {
+        document.documentElement.setAttribute('data-theme', 'dark')
+        if (document.querySelector('meta[name="theme-color"]') !== null) {
+          document.querySelector('meta[name="theme-color"]').setAttribute('content', '#0d0d0d')
+        }
+      }
+      const activateLightMode = () => {
+        document.documentElement.setAttribute('data-theme', 'light')
+        if (document.querySelector('meta[name="theme-color"]') !== null) {
+          document.querySelector('meta[name="theme-color"]').setAttribute('content', '#f6e1da')
+        }
+      }
+
+      btf.activateDarkMode = activateDarkMode
+      btf.activateLightMode = activateLightMode
+
+      const theme = saveToLocal.get('theme')
+    
+          theme === 'dark' ? activateDarkMode() : theme === 'light' ? activateLightMode() : null
+        
+      
+      const asideStatus = saveToLocal.get('aside-status')
+      if (asideStatus !== undefined) {
+        document.documentElement.classList.toggle('hide-aside', asideStatus === 'hide')
+      }
+    
+      
+    const detectApple = () => {
+      if (/iPad|iPhone|iPod|Macintosh/.test(navigator.userAgent)) {
+        document.documentElement.classList.add('apple')
+      }
+    }
+    detectApple()
+  
+    })()
+  </script><script>const GLOBAL_CONFIG = {
+  root: '/',
+  algolia: undefined,
+  localSearch: undefined,
+  translate: undefined,
+  highlight: {"plugin":"highlight.js","highlightCopy":true,"highlightLang":true,"highlightHeightLimit":300,"highlightFullpage":false,"highlightMacStyle":false},
+  copy: {
+    success: '复制成功',
+    error: '复制失败',
+    noSupport: '浏览器不支持'
+  },
+  relativeDate: {
+    homepage: false,
+    post: false
+  },
+  runtime: '',
+  dateSuffix: {
+    just: '刚刚',
+    min: '分钟前',
+    hour: '小时前',
+    day: '天前',
+    month: '个月前'
+  },
+  copyright: {"limitCount":500,"languages":{"author":"作者: Meta Xiao","link":"链接: ","source":"来源: 浮生若梦","info":"著作权归作者所有。商业转载请联系作者获得授权，非商业转载请注明出处。"}},
+  lightbox: 'null',
+  Snackbar: {"chs_to_cht":"已切换为繁体中文","cht_to_chs":"已切换为简体中文","day_to_night":"已切换为深色模式","night_to_day":"已切换为浅色模式","bgLight":"#49b1f5","bgDark":"#1f1f1f","position":"bottom-center"},
+  infinitegrid: {
+    js: 'https://cdn.jsdelivr.net/npm/@egjs/infinitegrid/dist/infinitegrid.min.js',
+    buttonText: '加载更多'
+  },
+  isPhotoFigcaption: false,
+  islazyloadPlugin: false,
+  isAnchor: false,
+  percent: {
+    toc: true,
+    rightside: false,
+  },
+  autoDarkmode: false
+}</script><script id="config-diff">var GLOBAL_CONFIG_SITE = {
+  title: '关于',
+  isHighlightShrink: false,
+  isToc: false,
+  pageType: 'page'
+}</script><link rel="stylesheet" href="css/_custom/footer/footer.css"><link rel="stylesheet" href="css/_custom/post/modify.css"><link rel="stylesheet" href="css/_custom/layout/index.css"><!-- hexo injector head_end start -->
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.12.0/dist/katex.min.css">
+
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/hexo-math@4.0.0/dist/style.css">
+<!-- hexo injector head_end end --><meta name="generator" content="Hexo 7.3.0"></head><body><script>window.paceOptions = {
+  restartOnPushState: false
+}
+
+btf.addGlobalFn('pjaxSend', () => {
+  Pace.restart()
+}, 'pace_restart')
+
+</script><link rel="stylesheet" href="/css/flash.css"/><script src="https://cdn.jsdelivr.net/npm/pace-js/pace.min.js"></script><div id="web_bg" style="background-image: url(https://i.postimg.cc/kXXVLZ0F/index-img.jpg);"></div><div id="sidebar"><div id="menu-mask"></div><div id="sidebar-menus"><div class="avatar-img text-center"><img src="https://i.postimg.cc/xTR6mkG9/1737896078867.gif" onerror="this.onerror=null;this.src='/img/friend_404.gif'" alt="avatar"/></div><div class="site-data text-center"><a href="/archives/"><div class="headline">文章</div><div class="length-num">8</div></a><a href="/tags/"><div class="headline">标签</div><div class="length-num">6</div></a><a href="/categories/"><div class="headline">分类</div><div class="length-num">4</div></a></div><div class="menus_items"><div class="menus_item"><a class="site-page" href="/"><i class="fa-fw fas fa-home"></i><span> 首页</span></a></div><div class="menus_item"><a class="site-page" href="/archives/"><i class="fa-fw fas fa-archive"></i><span> 时间轴</span></a></div><div class="menus_item"><a class="site-page" href="/tags/"><i class="fa-fw fas fa-tags"></i><span> 标签</span></a></div><div class="menus_item"><a class="site-page" href="/categories/"><i class="fa-fw fas fa-folder-open"></i><span> 分类</span></a></div><div class="menus_item"><a class="site-page" href="/talks/"><i class="fa-fw fas fa-comment"></i><span> 动态</span></a></div><div class="menus_item"><a class="site-page" href="/link/"><i class="fa-fw fas fa-link"></i><span> 友链</span></a></div><div class="menus_item"><a class="site-page" href="/about/"><i class="fa-fw fas fa-heart"></i><span> 关于</span></a></div></div></div></div><div class="page type-about" id="body-wrap"><header class="not-top-img" id="page-header"><nav id="nav"><span id="blog-info"><a class="nav-site-title" href="/"><img class="site-icon" src="/img/bar-logo.png" alt="Logo"><span class="site-name">浮生若梦</span></a></span><div id="menus"><div class="menus_items"><div class="menus_item"><a class="site-page" href="/"><i class="fa-fw fas fa-home"></i><span> 首页</span></a></div><div class="menus_item"><a class="site-page" href="/archives/"><i class="fa-fw fas fa-archive"></i><span> 时间轴</span></a></div><div class="menus_item"><a class="site-page" href="/tags/"><i class="fa-fw fas fa-tags"></i><span> 标签</span></a></div><div class="menus_item"><a class="site-page" href="/categories/"><i class="fa-fw fas fa-folder-open"></i><span> 分类</span></a></div><div class="menus_item"><a class="site-page" href="/talks/"><i class="fa-fw fas fa-comment"></i><span> 动态</span></a></div><div class="menus_item"><a class="site-page" href="/link/"><i class="fa-fw fas fa-link"></i><span> 友链</span></a></div><div class="menus_item"><a class="site-page" href="/about/"><i class="fa-fw fas fa-heart"></i><span> 关于</span></a></div></div><div id="toggle-menu"><span class="site-page"><i class="fas fa-bars fa-fw"></i></span></div></div></nav><h1 class="title-seo">关于</h1></header><main class="layout hide-aside" id="content-inner"><div id="page"><div class="page-title">关于</div><div id="about-page"><div class="author-box"><div class="author-img"><img class="no-lightbox" src="https://i.postimg.cc/xTR6mkG9/1737896078867.gif"></div><div class="image-dot"></div><div class="p center logo large" style="text-align: center;">关于我</div><div class="p center small" style="text-align: center;">世界很大很大🌍，但快乐简简单单😊</div></div><div class="author-content"><div class="author-content-item myInfoAndSayHello"><div class="title1">你好，很高兴认识你👋</div><div class="title2">我叫<span class="inline-word">META</span></div><div class="title1">是一名 学生、学生、<span class="inline-word">还是学生🤓</span></div></div><div class="aboutsiteTips author-content-item"><div class="author-content-item-tips">追求</div><h2>源于<br>热爱而去<span class="inline-word">感受</span><div class="mask"><span class="first-tips">学习</span><span>生活</span><span data-up>程序</span><span data-show>体验</span></div></h2></div></div><div class="hello-about"><div class="cursor" style="translate:none;rotate:none;scale:none;transform:translate(721px,180px)"></div><div class="shapes"><div class="shape shape-1" style="translate:none;rotate:none;scale:none;transform:translate(721px,180px)"></div><div class="shape shape-2" style="translate:none;rotate:none;scale:none;transform:translate(721px,180px)"></div><div class="shape shape-3" style="translate:none;rotate:none;scale:none;transform:translate(721px,180px)"></div></div><div class="content"><h1>It's me!</h1></div></div><div class="author-content"><div class="author-content-item skills"><div class="card-content"><div class="author-content-item-tips">技能</div><span class="author-content-item-title">書到用時方恨少</span><div class="skills-style-group"><div class="tags-group-all"><div class="tags-group-wrapper"><div class="tags-group-icon-pair"><div class="tags-group-icon" style="background: #555555"><img class="no-lightbox" title="C" src="https://img.icons8.com/?size=100&amp;id=40670&amp;format=png&amp;color=000000"></div><div class="tags-group-icon" style="background: #00599C"><img class="no-lightbox" title="C++" src="https://i.postimg.cc/6QHPrz7h/C.png"></div></div><div class="tags-group-icon-pair"><div class="tags-group-icon" style="background: #3776AB"><img class="no-lightbox" title="Python" src="https://i.postimg.cc/V6dVDMnP/python.png"></div><div class="tags-group-icon" style="background: #000000"><img class="no-lightbox" title="Markdown" src="https://i.postimg.cc/G3TfDFbk/markdown.png"></div></div><div class="tags-group-icon-pair"><div class="tags-group-icon" style="background: #008080"><img class="no-lightbox" title="LATEX" src="https://i.postimg.cc/tTNqbt6K/latex.png"></div><div class="tags-group-icon" style="background: #FF6347"><img class="no-lightbox" title="Algorithm" src="https://i.postimg.cc/VvtHc8K7/algorithm.png"></div></div><div class="tags-group-icon-pair"><div class="tags-group-icon" style="background: #A22036"><img class="no-lightbox" title="Raspberry Pi" src="https://i.postimg.cc/jdzkgRw2/Raspberry-Pi.png"></div><div class="tags-group-icon" style="background: #FCC624"><img class="no-lightbox" title="Linux" src="https://i.postimg.cc/RVrDLW02/linux.png"></div></div><div class="tags-group-icon-pair"><div class="tags-group-icon" style="background: #557C94"><img class="no-lightbox" title="Kali" src="https://i.postimg.cc/4y8X7fBw/kalilinux.png"></div><div class="tags-group-icon" style="background: #F38027"><img class="no-lightbox" title="Blender" src="https://i.postimg.cc/B6kwy6BL/Blender.png"></div></div><div class="tags-group-icon-pair"><div class="tags-group-icon" style="background: 725757"><img class="no-lightbox" title="Unity" src="https://i.postimg.cc/k58M1dgX/unity.png"></div><div class="tags-group-icon" style="background: #31A8FF"><img class="no-lightbox" title="Photoshop" src="https://i.postimg.cc/qRTJWZNc/Photoshop.png"></div></div><div class="tags-group-icon-pair"><div class="tags-group-icon" style="background: #D24726"><img class="no-lightbox" title="Powerpoint" src="https://i.postimg.cc/kX4JrSgH/powerpoint.png"></div><div class="tags-group-icon" style="background: #2B579A"><img class="no-lightbox" title="Word" src="https://i.postimg.cc/rFP8qpdw/WORD.png"></div></div><div class="tags-group-icon-pair"><div class="tags-group-icon" style="background: #1B2838"><img class="no-lightbox" title="Steam" src="https://i.postimg.cc/J071zDcG/steam.png"></div><div class="tags-group-icon" style="background: #3FAEAA"><img class="no-lightbox" title="Ubisoft" src="https://i.postimg.cc/mZVL6jBM/ubisoft.png"></div></div></div></div><div class="skills-list"><div class="skill-info"><div class="skill-icon" style="background: #555555"><img class="no-lightbox" title="C" src="https://img.icons8.com/?size=100&amp;id=40670&amp;format=png&amp;color=000000"></div><div class="skill-name"><span>C</span></div></div><div class="skill-info"><div class="skill-icon" style="background: #00599C"><img class="no-lightbox" title="C++" src="https://i.postimg.cc/6QHPrz7h/C.png"></div><div class="skill-name"><span>C++</span></div></div><div class="skill-info"><div class="skill-icon" style="background: #3776AB"><img class="no-lightbox" title="Python" src="https://i.postimg.cc/V6dVDMnP/python.png"></div><div class="skill-name"><span>Python</span></div></div><div class="skill-info"><div class="skill-icon" style="background: #000000"><img class="no-lightbox" title="Markdown" src="https://i.postimg.cc/G3TfDFbk/markdown.png"></div><div class="skill-name"><span>Markdown</span></div></div><div class="skill-info"><div class="skill-icon" style="background: #008080"><img class="no-lightbox" title="LATEX" src="https://i.postimg.cc/tTNqbt6K/latex.png"></div><div class="skill-name"><span>LATEX</span></div></div><div class="skill-info"><div class="skill-icon" style="background: #FF6347"><img class="no-lightbox" title="Algorithm" src="https://i.postimg.cc/VvtHc8K7/algorithm.png"></div><div class="skill-name"><span>Algorithm</span></div></div><div class="skill-info"><div class="skill-icon" style="background: #A22036"><img class="no-lightbox" title="Raspberry Pi" src="https://i.postimg.cc/jdzkgRw2/Raspberry-Pi.png"></div><div class="skill-name"><span>Raspberry Pi</span></div></div><div class="skill-info"><div class="skill-icon" style="background: #FCC624"><img class="no-lightbox" title="Linux" src="https://i.postimg.cc/RVrDLW02/linux.png"></div><div class="skill-name"><span>Linux</span></div></div><div class="skill-info"><div class="skill-icon" style="background: #557C94"><img class="no-lightbox" title="Kali" src="https://i.postimg.cc/4y8X7fBw/kalilinux.png"></div><div class="skill-name"><span>Kali</span></div></div><div class="skill-info"><div class="skill-icon" style="background: #F38027"><img class="no-lightbox" title="Blender" src="https://i.postimg.cc/B6kwy6BL/Blender.png"></div><div class="skill-name"><span>Blender</span></div></div><div class="skill-info"><div class="skill-icon" style="background: 725757"><img class="no-lightbox" title="Unity" src="https://i.postimg.cc/k58M1dgX/unity.png"></div><div class="skill-name"><span>Unity</span></div></div><div class="skill-info"><div class="skill-icon" style="background: #31A8FF"><img class="no-lightbox" title="Photoshop" src="https://i.postimg.cc/qRTJWZNc/Photoshop.png"></div><div class="skill-name"><span>Photoshop</span></div></div><div class="skill-info"><div class="skill-icon" style="background: #D24726"><img class="no-lightbox" title="Powerpoint" src="https://i.postimg.cc/kX4JrSgH/powerpoint.png"></div><div class="skill-name"><span>Powerpoint</span></div></div><div class="skill-info"><div class="skill-icon" style="background: #2B579A"><img class="no-lightbox" title="Word" src="https://i.postimg.cc/rFP8qpdw/WORD.png"></div><div class="skill-name"><span>Word</span></div></div><div class="skill-info"><div class="skill-icon" style="background: #1B2838"><img class="no-lightbox" title="Steam" src="https://i.postimg.cc/J071zDcG/steam.png"></div><div class="skill-name"><span>Steam</span></div></div><div class="skill-info"><div class="skill-icon" style="background: #3FAEAA"><img class="no-lightbox" title="Ubisoft" src="https://i.postimg.cc/mZVL6jBM/ubisoft.png"></div><div class="skill-name"><span>Ubisoft</span></div></div><div class="skill-info"><div class="skill-icon" style="background: #D3D3D3"><img class="no-lightbox" title="EA" src="https://i.postimg.cc/4y0rRm8C/ea.png"></div><div class="skill-name"><span>EA</span></div></div><div class="etc">...</div></div></div></div></div><div class="author-content-item careers"><div class="card-content"><div class="author-content-item-tips">生涯</div><span class="author-content-item-title">無限進步</span><div class="careers-group"><div class="careers-item"><div class="circle" style="background:#357ef5"></div><div class="name">集成电路设计与集成系统</div></div></div><img class="author-content-img no-lightbox" alt="生涯" src="https://i.postimg.cc/tJ4DXvhx/edu.png"></div></div></div><div class="author-content"><div class="about-statistic author-content-item"><div class="card-content"><div class="author-content-item-tips">数据</div><span class="author-content-item-title">访问统计</span><div id="statistic"></div><div class="post-tips">统计信息来自<a href="https://invite.51.la/1NzKqTeb?target=V6" target="_blank" rel="noopener nofollow">51la网站统计</a></div><div class="banner-button-group"><a class="banner-button" onclick="pjax.loadUrl(&quot;/archives/&quot;)" data-pjax-state><i class="fas fa-circle-right"></i><span class="banner-button-text">文章隧道</span></a></div></div></div><div class="author-content-item game-yuanshen"><div class="card-content"><div class="author-content-item-tips">爱好游戏</div><span class="author-content-item-title">法国原神——彩虹六号</span><div class="content-bottom"><div class="icon-group"><div class="loading-bar" role="presentation" aria-hidden="true"><img class="no-lightbox" src="https://game.gtimg.cn/images/r6m/web202408/content/loading-logo.png" alt="Loading..." longdesc="https://r6.qq.com/web202408/index.html"></div></div><div class="tips game-yuanshen-uid">Ubisoft ID: META-X</div></div></div></div></div><div class="autor-content"><div class="author-content-item comic-content"><div class="card-content"><div class="author-content-item-tips">阅片无数</div><div class="author-content-item-title">番剧</div><div class="comic-box"><a class="comic-item" href="https://www.bilibili.com/bangumi/play/ss29325?spm_id_from=333.1387.0.0" rel="external nofollow noreferrer" target="_blank" title="某科学的超电磁炮T"><div class="comic-item-cover"><img src="https://i.postimg.cc/MKNdxp4z/Toaru-Kagaku-no-Railgun-T-Anime-KV.webp" alt="某科学的超电磁炮T"></div></a><a class="comic-item" href="https://www.bilibili.com/bangumi/play/ss779?spm_id_from=333.1387.0.0" rel="external nofollow noreferrer" target="_blank" title="Fate/Zero 第二季"><div class="comic-item-cover"><img src="https://i.postimg.cc/MT9mL6V2/Fate-Zero-2nd-Season.webp" alt="Fate/Zero 第二季"></div></a><a class="comic-item" href="https://www.bilibili.com/bangumi/play/ep779775?spm_id_from=333.1387.0.0&amp;from_spmid=666.25.episode.0" rel="external nofollow noreferrer" target="_blank" title="葬送的芙莉莲"><div class="comic-item-cover"><img src="https://i.postimg.cc/6pZzQNJn/Frieren-KV4.webp" alt="葬送的芙莉莲"></div></a><a class="comic-item" href="https://www.bilibili.com/bangumi/media/md22718131/?spm_id_from=666.25.b_6d656469615f6d6f64756c65.1" rel="external nofollow noreferrer" target="_blank" title="鬼灭之刃"><div class="comic-item-cover"><img src="https://bu.dusays.com/2023/05/24/646db439856a0.webp" alt="鬼灭之刃"></div></a><a class="comic-item" href="https://www.bilibili.com/bangumi/play/ss29310?spm_id_from=333.1387.0.0" rel="external nofollow noreferrer" target="_blank" title="异度侵入 ID:INVADED"><div class="comic-item-cover"><img src="https://i.postimg.cc/5tMgYkbG/ID-INVADED-KV2.webp" alt="异度侵入 ID:INVADED"></div></a><a class="comic-item" href="https://www.bilibili.com/bangumi/play/ss835?spm_id_from=333.1387.0.0" rel="external nofollow noreferrer" target="_blank" title="我们仍未知道那天所看见的花的名字。"><div class="comic-item-cover"><img src="https://i.postimg.cc/6QL0dLQQ/Naduohua-anime.webp" alt="我们仍未知道那天所看见的花的名字。"></div></a><a class="comic-item" href="https://www.bilibili.com/bangumi/play/ss2574?spm_id_from=333.1387.0.0" rel="external nofollow noreferrer" target="_blank" title="魔法少女☆伊莉雅 2WEI!"><div class="comic-item-cover"><img src="https://i.postimg.cc/XJjgxGZk/Prisma-Illya-Movie3illust.webp" alt="魔法少女☆伊莉雅 2WEI!"></div></a><a class="comic-item" href="https://www.bilibili.com/bangumi/play/ss21554?spm_id_from=333.1387.0.0" rel="external nofollow noreferrer" target="_blank" title="龙王的工作！"><div class="comic-item-cover"><img src="https://i.postimg.cc/90zY56Y4/Ryuoh-no-Oshigoto-Vol1.webp" alt="龙王的工作！"></div></a><a class="comic-item" href="https://www.bilibili.com/bangumi/play/ss40713?spm_id_from=333.1387.0.0" rel="external nofollow noreferrer" target="_blank" title="進擊的巨人 The Final Season Part 2"><div class="comic-item-cover"><img src="https://i.postimg.cc/Hsq4RPcx/Attack-on-Titan-final-Season-kv5.webp" alt="進擊的巨人 The Final Season Part 2"></div></a><a class="comic-item" href="https://www.bilibili.com/bangumi/play/ss43164?spm_id_from=333.1387.0.0" rel="external nofollow noreferrer" target="_blank" title="孤独摇滚！"><div class="comic-item-cover"><img src="https://i.postimg.cc/ryY9Cpq5/BTR-AC1.webp" alt="孤独摇滚！"></div></a><a class="comic-item" href="https://www.bilibili.com/bangumi/play/ss44515?spm_id_from=333.1387.0.0&amp;from_spmid=666.25.series.0" rel="external nofollow noreferrer" target="_blank" title="新世纪福音战士新剧场版：终"><div class="comic-item-cover"><img src="https://i.postimg.cc/wTyQWdBZ/Evangelion-3-0-1-0-KV2.webp" alt="新世纪福音战士新剧场版：终"></div></a><a class="comic-item" href="https://www.bilibili.com/bangumi/play/ss1672?spm_id_from=333.337.0.0" rel="external nofollow noreferrer" target="_blank" title="龙与虎"><div class="comic-item-cover"><img src="https://i.postimg.cc/MH4bW999/01.webp" alt="龙与虎"></div></a><a class="comic-item" href="https://www.bilibili.com/bangumi/play/ss39024?spm_id_from=333.1387.0.0" rel="external nofollow noreferrer" target="_blank" title="小林家的龍女僕S"><div class="comic-item-cover"><img src="https://i.postimg.cc/0NxG2MC1/Maidragon-S-KV3.webp" alt="小林家的龍女僕S"></div></a><a class="comic-item" href="https://www.bilibili.com/video/BV17LmfY9E7r/?vd_source=a59b4b8d71a2b68cf6171e95c337e736" rel="external nofollow noreferrer" target="_blank" title="败犬女主太多了！"><div class="comic-item-cover"><img src="https://i.postimg.cc/Dw1dTdLc/image.webp" alt="败犬女主太多了！"></div></a></div></div></div></div><div class="author-content"><div class="author-content-item maxim"><div class="author-content-item-tips">座右铭</div><span class="maxim-title"><span style="opacity:.6;margin-bottom:8px">稚嫩尚有成长和成熟的可能，</span><span>而僵化则是精神的绝症。</span></span></div><div class="author-content-item buff"><div class="card-content"><div class="author-content-item-tips">特长</div><span class="buff-title"><span style="opacity:.6;margin-bottom:8px">无厘头地<span class="inline-word">到处摸鱼🐟</span></span><span>抽象指数<span class="inline-word">MAX   </span></span></span></div><div class="card-background-icon"><i class="fas fa-dice-d20"></i></div></div></div><div class="author-content"><div class="author-content-item like-technology"><div class="card-content"><div class="author-content-item-tips">关注偏好</div><span class="author-content-item-title">数码科技</span><div class="content-bottom"><div class="tips">手机、电脑软硬件</div></div></div></div><div class="author-content-item like-music"><div class="card-content"><div class="author-content-item-tips">音乐偏好</div><span class="author-content-item-title">电子  摇滚</span><span class="author-content-item-title">ACGN</span><span class="author-content-item-title">华语流行</span><div class="content-bottom"><div class="tips">跟 META 一起欣赏更多音乐</div></div><div class="banner-button-group"><a class="banner-button" onclick="window.open(&quot;https://activity.kugou.com/share/v-c7b4da67/index.html?id=f2456f92faa9c99a98817e23ce43e145&quot;)" data-pjax-state><i class="fas fa-circle-right"></i><span class="banner-button-text">更多推荐</span></a></div></div></div></div><div class="author-content"><div class="create-site-post author-content-item single"><div class="author-content-item-tips">心路历程</div>欢迎来到我的博客 😝，这里是我记笔记的地方 </div></div></div><script src="/js/countup.js"></script><script src="https://lf26-cdn-tos.bytecdntp.com/cdn/expire-1-M/gsap/3.9.1/gsap.min.js"></script><script>(() => {
+  function isInViewPortOfOne(el) {
+    if (!el) return;
+    const viewPortHeight = window.innerHeight || document.documentElement.clientHeight || document.body.clientHeight;
+    const offsetTop = el.offsetTop;
+    const scrollTop = document.documentElement.scrollTop;
+    const top = offsetTop - scrollTop;
+    return top <= viewPortHeight;
+  }
+  fetch('https://v6-widget.51.la/v6/3L3LMrlEa92UPmXV/quote.js').then(res => res.text()).then((data) => {
+      let title = ['最近活跃', '今日人数', '今日访问', '昨日人数', '昨日访问', '本月访问', '总访问量']
+      let num = data.match(/(<\/span><span>).*?(\/span><\/p>)/g)
+
+      num = num.map((el) => {
+        let val = el.replace(/(<\/span><span>)/g, '')
+        let str = val.replace(/(<\/span><\/p>)/g, '')
+        return str
+      })
+
+      let statisticEl = document.getElementById('statistic')
+
+      // 自定义不显示哪个或者显示哪个，如下为不显示 最近活跃访客 和 总访问量
+      let statistic = []
+      for (let i = 0; i < num.length; i++) {
+          if (!statisticEl) return
+          //- if (i == 0 || i == num.length - 1) continue;
+          if (i == 0) continue; //设置为不显示 最近活跃访客
+          statisticEl.innerHTML += '<div><span>' + title[i] + '</span><span id='+ title[i] + '>' + num[i] + '</span></div>'
+          queueMicrotask(()=> {
+            statistic.push(new CountUp(title[i], 0, num[i], 0, 2, {
+                useEasing: true,
+                useGrouping: true,
+                separator: ',',
+                decimal: '.',
+                prefix: '',
+                suffix: ''
+            }))
+          })
+      }
+
+      function statisticUP () {
+        let statisticElment = document.querySelector('.about-statistic.author-content-item');
+        if(isInViewPortOfOne(statisticElment)) {
+          for (let i = 0; i < num.length; i++) {
+            if (i == 0 || i == num.length - 1) continue;
+            statistic[i-1].start();
+          }
+          document.removeEventListener('scroll', throttleStatisticUP);
+        }
+      }
+
+      const selfInfoContentYear = new CountUp('selfInfo-content-year', 0, 2002, 0, 2, {
+        useEasing: true,
+        useGrouping: false,
+        separator: ',',
+        decimal: '.',
+        prefix: '',
+        suffix: ''
+      })
+
+      function scrollSelfInfoContentYear() {
+        let selfInfoContentYearElment = document.querySelector('.author-content-item.selfInfo.single');
+        if (selfInfoContentYearElment && isInViewPortOfOne(selfInfoContentYearElment)) {
+          selfInfoContentYear.start()
+          document.removeEventListener('scroll', throttleScrollSelfInfoContentYear);
+        }
+      }
+      const throttleStatisticUP = btf.throttle(statisticUP, 200)
+      document.addEventListener('scroll', throttleStatisticUP, {passive: true})
+
+      const throttleScrollSelfInfoContentYear = btf.throttle(scrollSelfInfoContentYear, 200)
+      document.addEventListener('scroll', throttleScrollSelfInfoContentYear, {passive: true})
+  });
+
+  var pursuitInterval = null;
+    pursuitInterval = setInterval(function () {
+      const show = document.querySelector('span[data-show]')
+      const next = show.nextElementSibling || document.querySelector('.first-tips')
+      const up = document.querySelector('span[data-up]')
+
+      if (up) {
+        up.removeAttribute('data-up')
+      }
+
+      show.removeAttribute('data-show')
+      show.setAttribute('data-up', '')
+
+      next.setAttribute('data-show', '')
+    }, 2000)
+
+    document.addEventListener('pjax:send', function(){
+      clearInterval(pursuitInterval);
+    });
+
+    var helloAboutEl = document.querySelector('.hello-about')
+    helloAboutEl.addEventListener("mousemove", evt => {
+      const mouseX = evt.offsetX;
+      const mouseY = evt.offsetY;
+      gsap.set(".cursor", {
+        x: mouseX,
+        y: mouseY,
+      })
+
+      gsap.to(".shape", {
+        x: mouseX,
+        y: mouseY,
+        stagger: -0.1
+      })
+    })
+})()</script></div></main><footer id="footer" style="background: transparent"><footer id="footer" style="background: transparent"><div id="footer_icons"><div><a class="icon_link" target="_blank" rel="noopener external nofollow" href="https://www.teslongxiao.cn/about" title="关于我"><i class="fa-solid fa-compass"></i></a><a class="icon_link" target="_blank" rel="noopener external nofollow" href="https://res.abeim.cn/api/qq/?qq=2040426884" title="联系QQ"><i class="fa-brands fa-qq"></i></a><a class="icon_link" target="_blank" rel="noopener external nofollow" href="mailto:2040426884@qq.com" title="发送邮件"><i class="fa-solid fa-envelope"></i></a></div><img class="footer_logo" src="https://i.postimg.cc/g2fFsC0m/aoao.gif" onclick="btf.scrollToDest(0,500)" title="返回顶部"/><div><a class="icon_link" target="_blank" rel="noopener external nofollow" href="https://github.com/META-Xiao" title="Github主页"><i class="fa-brands fa-github"></i></a><a class="icon_link" target="_blank" rel="noopener external nofollow" href="https://space.bilibili.com/332124713" title="哔哩哔哩主页"><i class="fa-brands fa-bilibili"></i></a><a class="icon_link" href="/message/" title="留言"><i class="fa-solid fa-comment"></i></a></div><div id="footer_content"><div class="footer-group"><h3 class="footer-title"></h3><div class="footer-links"><a class="footer-item" href="undefined"></a></div></div></div></div><div id="footer-bottom"><div class="footer-bottom-content"><div class="footer-bottom-left"><span class="copyright">&copy;2024 - 2025 By <a target="_blank" rel="noopener" href="https://www.teslongxiao.cn" title="点击访问&quot;Meta&quot;的主页" style="margin-left:5px">Meta</a></span><div><a class="footer-bottom-link" target="_blank" href="https://icp.gov.moe/?keyword=20250061" rel="noopener external nofollow" title="萌ICP备20250061号">萌ICP备20250061号</a><a class="footer-bottom-link" target="_blank" href="https://v6.51.la/report/overview?comId=510796" rel="noopener external nofollow" title="51LA">统计信息</a></div></div><div class="footer-bottom-right"><div id="runtime" title="已运行时长">本站已运行：0 天 0 时 0 分 0 秒</div><div><a class="footer-bottom-link" target="_blank" href="https://hexo.io/zh-cn/" rel="noopener external nofollow" title="框架">Hexo</a><a class="footer-bottom-link" target="_blank" href="https://butterfly.js.org/" rel="noopener external nofollow" title="主题">Butterfly</a></div><script type="js" src="/js/footer.js"> </script></div></div></div></footer></footer></div><div id="rightside"><div id="rightside-config-hide"><button id="darkmode" type="button" title="日间和夜间模式切换"><i class="fas fa-adjust"></i></button></div><div id="rightside-config-show"><button id="rightside-config" type="button" title="设置"><i class="fas fa-cog fa-spin"></i></button><button id="go-up" type="button" title="回到顶部"><span class="scroll-percent"></span><i class="fas fa-arrow-up"></i></button></div></div><div><script src="/js/utils.js"></script><script src="/js/main.js"></script><script src="https://cdn.jsdelivr.net/npm/node-snackbar/dist/snackbar.min.js"></script><div class="js-pjax"><script>(() => {
+  const runMermaid = ele => {
+    window.loadMermaid = true
+    const theme = document.documentElement.getAttribute('data-theme') === 'dark' ? 'dark' : 'default'
+
+    ele.forEach((item, index) => {
+      const mermaidSrc = item.firstElementChild
+      const mermaidThemeConfig = `%%{init:{ 'theme':'${theme}'}}%%\n`
+      const mermaidID = `mermaid-${index}`
+      const mermaidDefinition = mermaidThemeConfig + mermaidSrc.textContent
+
+      const renderFn = mermaid.render(mermaidID, mermaidDefinition)
+      const renderMermaid = svg => {
+        mermaidSrc.insertAdjacentHTML('afterend', svg)
+      }
+
+      // mermaid v9 and v10 compatibility
+      typeof renderFn === 'string' ? renderMermaid(renderFn) : renderFn.then(({ svg }) => renderMermaid(svg))
+    })
+  }
+
+  const codeToMermaid = () => {
+    const codeMermaidEle = document.querySelectorAll('pre > code.mermaid')
+    if (codeMermaidEle.length === 0) return
+
+    codeMermaidEle.forEach(ele => {
+      const preEle = document.createElement('pre')
+      preEle.className = 'mermaid-src'
+      preEle.hidden = true
+      preEle.textContent = ele.textContent
+      const newEle = document.createElement('div')
+      newEle.className = 'mermaid-wrap'
+      newEle.appendChild(preEle)
+      ele.parentNode.replaceWith(newEle)
+    })
+  }
+
+  const loadMermaid = () => {
+    if (true) codeToMermaid()
+    const $mermaid = document.querySelectorAll('#article-container .mermaid-wrap')
+    if ($mermaid.length === 0) return
+
+    const runMermaidFn = () => runMermaid($mermaid)
+    btf.addGlobalFn('themeChange', runMermaidFn, 'mermaid')
+    window.loadMermaid ? runMermaidFn() : btf.getScript('https://cdn.jsdelivr.net/npm/mermaid/dist/mermaid.min.js').then(runMermaidFn)
+  }
+
+  btf.addGlobalFn('encrypt', loadMermaid, 'mermaid')
+  window.pjax ? loadMermaid() : document.addEventListener('DOMContentLoaded', loadMermaid)
+})()</script></div><script charset="UTF-8" id="LA_COLLECT" src="https://sdk.51.la/js-sdk-pro.min.js"></script><script src="https://sdk.51.la/perf/js-sdk-perf.min.js" crossorigin="anonymous"></script><script>LA.init({id:"3L3LMrlEa92UPmXV",ck:"3L3LMrlEa92UPmXV"})</script><script>new LingQue.Monitor().init({id:"3L4UsWErO5jKfAwH",sendSuspicious:true});</script><script defer src="/js/footer.js"></script><script async data-pjax src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script></div></body></html>
