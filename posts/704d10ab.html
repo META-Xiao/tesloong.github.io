@@ -1,0 +1,514 @@
+<!DOCTYPE html><html lang="zh-CN" data-theme="dark"><head><meta charset="UTF-8"><meta http-equiv="X-UA-Compatible" content="IE=edge"><meta name="viewport" content="width=device-width, initial-scale=1.0,viewport-fit=cover"><title>火箭轨迹三维模拟（低空） | 浮生若梦</title><meta name="author" content="Meta Xiao"><meta name="copyright" content="Meta Xiao"><meta name="format-detection" content="telephone=no"><meta name="theme-color" content="#0d0d0d"><meta name="description" content="“Failure is an option here. If things are not failing, you are not innovating enough.”——Elon Musk 过程概述发射阶段（Liftoff） 火箭继续以倾角 $\theta_0$ 上升，速度逐渐增加。 空气阻力与速度方向相反，需要考虑空气阻力的影响。 火箭的姿态可能会随时间调整（例如通过控制舵面或推力矢量控制">
+<meta property="og:type" content="article">
+<meta property="og:title" content="火箭轨迹三维模拟（低空）">
+<meta property="og:url" content="https://www.teslongxiao.cn/posts/704d10ab.html">
+<meta property="og:site_name" content="浮生若梦">
+<meta property="og:description" content="“Failure is an option here. If things are not failing, you are not innovating enough.”——Elon Musk 过程概述发射阶段（Liftoff） 火箭继续以倾角 $\theta_0$ 上升，速度逐渐增加。 空气阻力与速度方向相反，需要考虑空气阻力的影响。 火箭的姿态可能会随时间调整（例如通过控制舵面或推力矢量控制">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="https://image-host-for-meta.oss-cn-hangzhou.aliyuncs.com/blog-img/2025-03-12%20122109.png">
+<meta property="article:published_time" content="2025-03-05T06:21:50.358Z">
+<meta property="article:modified_time" content="2025-03-05T06:21:51.078Z">
+<meta property="article:author" content="Meta Xiao">
+<meta property="article:tag" content="模拟">
+<meta property="article:tag" content="物理">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://image-host-for-meta.oss-cn-hangzhou.aliyuncs.com/blog-img/2025-03-12%20122109.png"><script type="application/ld+json">{
+  "@context": "https://schema.org",
+  "@type": "BlogPosting",
+  "headline": "火箭轨迹三维模拟（低空）",
+  "url": "https://www.teslongxiao.cn/posts/704d10ab.html",
+  "image": "https://image-host-for-meta.oss-cn-hangzhou.aliyuncs.com/blog-img/2025-03-12%20122109.png",
+  "datePublished": "2025-03-05T06:21:50.358Z",
+  "dateModified": "2025-03-05T06:21:51.078Z",
+  "author": [
+    {
+      "@type": "Person",
+      "name": "Meta Xiao",
+      "url": "https://www.teslongxiao.cn/"
+    }
+  ]
+}</script><link rel="shortcut icon" href="https://image-host-for-meta.oss-cn-hangzhou.aliyuncs.com/blog-img/image.png"><link rel="canonical" href="https://www.teslongxiao.cn/posts/704d10ab.html"><link rel="preconnect" href="//cdn.jsdelivr.net"/><link rel="preconnect" href="//busuanzi.ibruce.info"/><meta name="google-site-verification" content="Qi_9CrV7lldy8VD7RIVN3Nb62FP7EmhAITFqplx0mzo"/><meta name="baidu-site-verification" content="codeva-nF4CVmePFG"/><link rel="stylesheet" href="/css/index.css"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free/css/all.min.css"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/node-snackbar/dist/snackbar.min.css" media="print" onload="this.media='all'"><script>
+    (() => {
+      
+    const saveToLocal = {
+      set: (key, value, ttl) => {
+        if (!ttl) return
+        const expiry = Date.now() + ttl * 86400000
+        localStorage.setItem(key, JSON.stringify({ value, expiry }))
+      },
+      get: key => {
+        const itemStr = localStorage.getItem(key)
+        if (!itemStr) return undefined
+        const { value, expiry } = JSON.parse(itemStr)
+        if (Date.now() > expiry) {
+          localStorage.removeItem(key)
+          return undefined
+        }
+        return value
+      }
+    }
+
+    window.btf = {
+      saveToLocal,
+      getScript: (url, attr = {}) => new Promise((resolve, reject) => {
+        const script = document.createElement('script')
+        script.src = url
+        script.async = true
+        Object.entries(attr).forEach(([key, val]) => script.setAttribute(key, val))
+        script.onload = script.onreadystatechange = () => {
+          if (!script.readyState || /loaded|complete/.test(script.readyState)) resolve()
+        }
+        script.onerror = reject
+        document.head.appendChild(script)
+      }),
+      getCSS: (url, id) => new Promise((resolve, reject) => {
+        const link = document.createElement('link')
+        link.rel = 'stylesheet'
+        link.href = url
+        if (id) link.id = id
+        link.onload = link.onreadystatechange = () => {
+          if (!link.readyState || /loaded|complete/.test(link.readyState)) resolve()
+        }
+        link.onerror = reject
+        document.head.appendChild(link)
+      }),
+      addGlobalFn: (key, fn, name = false, parent = window) => {
+        if (!true && key.startsWith('pjax')) return
+        const globalFn = parent.globalFn || {}
+        globalFn[key] = globalFn[key] || {}
+        globalFn[key][name || Object.keys(globalFn[key]).length] = fn
+        parent.globalFn = globalFn
+      }
+    }
+  
+      
+      const activateDarkMode = () => {
+        document.documentElement.setAttribute('data-theme', 'dark')
+        if (document.querySelector('meta[name="theme-color"]') !== null) {
+          document.querySelector('meta[name="theme-color"]').setAttribute('content', '#0d0d0d')
+        }
+      }
+      const activateLightMode = () => {
+        document.documentElement.setAttribute('data-theme', 'light')
+        if (document.querySelector('meta[name="theme-color"]') !== null) {
+          document.querySelector('meta[name="theme-color"]').setAttribute('content', '#f6e1da')
+        }
+      }
+
+      btf.activateDarkMode = activateDarkMode
+      btf.activateLightMode = activateLightMode
+
+      const theme = saveToLocal.get('theme')
+    
+          theme === 'dark' ? activateDarkMode() : theme === 'light' ? activateLightMode() : null
+        
+      
+      const asideStatus = saveToLocal.get('aside-status')
+      if (asideStatus !== undefined) {
+        document.documentElement.classList.toggle('hide-aside', asideStatus === 'hide')
+      }
+    
+      
+    const detectApple = () => {
+      if (/iPad|iPhone|iPod|Macintosh/.test(navigator.userAgent)) {
+        document.documentElement.classList.add('apple')
+      }
+    }
+    detectApple()
+  
+    })()
+  </script><script>const GLOBAL_CONFIG = {
+  root: '/',
+  algolia: undefined,
+  localSearch: undefined,
+  translate: undefined,
+  highlight: {"plugin":"highlight.js","highlightCopy":true,"highlightLang":true,"highlightHeightLimit":300,"highlightFullpage":false,"highlightMacStyle":false},
+  copy: {
+    success: '复制成功',
+    error: '复制失败',
+    noSupport: '浏览器不支持'
+  },
+  relativeDate: {
+    homepage: false,
+    post: false
+  },
+  runtime: '',
+  dateSuffix: {
+    just: '刚刚',
+    min: '分钟前',
+    hour: '小时前',
+    day: '天前',
+    month: '个月前'
+  },
+  copyright: {"limitCount":500,"languages":{"author":"作者: Meta Xiao","link":"链接: ","source":"来源: 浮生若梦","info":"著作权归作者所有。商业转载请联系作者获得授权，非商业转载请注明出处。"}},
+  lightbox: 'null',
+  Snackbar: {"chs_to_cht":"已切换为繁体中文","cht_to_chs":"已切换为简体中文","day_to_night":"已切换为深色模式","night_to_day":"已切换为浅色模式","bgLight":"#49b1f5","bgDark":"#1f1f1f","position":"bottom-center"},
+  infinitegrid: {
+    js: 'https://cdn.jsdelivr.net/npm/@egjs/infinitegrid/dist/infinitegrid.min.js',
+    buttonText: '加载更多'
+  },
+  isPhotoFigcaption: false,
+  islazyloadPlugin: false,
+  isAnchor: false,
+  percent: {
+    toc: true,
+    rightside: false,
+  },
+  autoDarkmode: false
+}</script><script id="config-diff">var GLOBAL_CONFIG_SITE = {
+  title: '火箭轨迹三维模拟（低空）',
+  isHighlightShrink: false,
+  isToc: true,
+  pageType: 'post'
+}</script><link rel="stylesheet" href="css/_custom/**/*.css"><!-- hexo injector head_end start -->
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.12.0/dist/katex.min.css">
+
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/hexo-math@4.0.0/dist/style.css">
+<!-- hexo injector head_end end --><meta name="generator" content="Hexo 7.3.0"></head><body><script>window.paceOptions = {
+  restartOnPushState: false
+}
+
+btf.addGlobalFn('pjaxSend', () => {
+  Pace.restart()
+}, 'pace_restart')
+
+</script><link rel="stylesheet" href="/css/flash.css"/><script src="https://cdn.jsdelivr.net/npm/pace-js/pace.min.js"></script><div id="web_bg" style="background-image: url(https://image-host-for-meta.oss-cn-hangzhou.aliyuncs.com/blog-img/subway_girl.gif);"></div><div id="sidebar"><div id="menu-mask"></div><div id="sidebar-menus"><div class="avatar-img text-center"><img src="https://image-host-for-meta.oss-cn-hangzhou.aliyuncs.com/blog-img/1737896078867.gif" onerror="this.onerror=null;this.src='/img/friend_404.gif'" alt="avatar"/></div><div class="site-data text-center"><a href="/archives/"><div class="headline">文章</div><div class="length-num">10</div></a><a href="/tags/"><div class="headline">标签</div><div class="length-num">7</div></a><a href="/categories/"><div class="headline">分类</div><div class="length-num">6</div></a></div><div class="menus_items"><div class="menus_item"><a class="site-page" href="/"><i class="fa-fw fas fa-home"></i><span> 首页</span></a></div><div class="menus_item"><a class="site-page" href="/archives/"><i class="fa-fw fas fa-archive"></i><span> 时间轴</span></a></div><div class="menus_item"><a class="site-page" href="/tags/"><i class="fa-fw fas fa-tags"></i><span> 标签</span></a></div><div class="menus_item"><a class="site-page" href="/categories/"><i class="fa-fw fas fa-folder-open"></i><span> 分类</span></a></div><div class="menus_item"><a class="site-page" href="/link/"><i class="fa-fw fas fa-link"></i><span> 友链</span></a></div><div class="menus_item"><span class="site-page group hide"><i class="fa-fw fas fa-user"></i><span> 我的</span><i class="fas fa-chevron-down"></i></span><ul class="menus_item_child"><li><a class="site-page child" href="/talks/"><i class="fa-fw fas fa-coffee"></i><span> 动态</span></a></li><li><a class="site-page child" href="/about/"><i class="fa-fw fas fa-heart"></i><span> 关于</span></a></li></ul></div></div></div></div><div class="post" id="body-wrap"><header class="post-bg" id="page-header" style="background-image: url(https://image-host-for-meta.oss-cn-hangzhou.aliyuncs.com/blog-img/2025-03-12%20122109.png);"><nav id="nav"><span id="blog-info"><a class="nav-site-title" href="/"><img class="site-icon" src="/img/bar-logo.png" alt="Logo"><span class="site-name">浮生若梦</span></a><a class="nav-page-title" href="/"><span class="site-name">火箭轨迹三维模拟（低空）</span></a></span><div id="menus"><div class="menus_items"><div class="menus_item"><a class="site-page" href="/"><i class="fa-fw fas fa-home"></i><span> 首页</span></a></div><div class="menus_item"><a class="site-page" href="/archives/"><i class="fa-fw fas fa-archive"></i><span> 时间轴</span></a></div><div class="menus_item"><a class="site-page" href="/tags/"><i class="fa-fw fas fa-tags"></i><span> 标签</span></a></div><div class="menus_item"><a class="site-page" href="/categories/"><i class="fa-fw fas fa-folder-open"></i><span> 分类</span></a></div><div class="menus_item"><a class="site-page" href="/link/"><i class="fa-fw fas fa-link"></i><span> 友链</span></a></div><div class="menus_item"><span class="site-page group hide"><i class="fa-fw fas fa-user"></i><span> 我的</span><i class="fas fa-chevron-down"></i></span><ul class="menus_item_child"><li><a class="site-page child" href="/talks/"><i class="fa-fw fas fa-coffee"></i><span> 动态</span></a></li><li><a class="site-page child" href="/about/"><i class="fa-fw fas fa-heart"></i><span> 关于</span></a></li></ul></div></div><div id="toggle-menu"><span class="site-page"><i class="fas fa-bars fa-fw"></i></span></div></div></nav><div id="post-info"><h1 class="post-title">火箭轨迹三维模拟（低空）</h1><div id="post-meta"><div class="meta-firstline"><span class="post-meta-date"><i class="far fa-calendar-alt fa-fw post-meta-icon"></i><span class="post-meta-label">发表于</span><time class="post-meta-date-created" datetime="2025-03-05T06:21:50.358Z" title="发表于 2025-03-05 14:21:50">2025-03-05</time><span class="post-meta-separator">|</span><i class="fas fa-history fa-fw post-meta-icon"></i><span class="post-meta-label">更新于</span><time class="post-meta-date-updated" datetime="2025-03-05T06:21:51.078Z" title="更新于 2025-03-05 14:21:51">2025-03-05</time></span><span class="post-meta-categories"><span class="post-meta-separator">|</span><i class="fas fa-inbox fa-fw post-meta-icon"></i><a class="post-meta-categories" href="/categories/%E7%AC%94%E8%AE%B0/">笔记</a></span></div><div class="meta-secondline"><span class="post-meta-separator">|</span><span class="post-meta-wordcount"><i class="far fa-file-word fa-fw post-meta-icon"></i><span class="post-meta-label">总字数:</span><span class="word-count">3.6k</span><span class="post-meta-separator">|</span><i class="far fa-clock fa-fw post-meta-icon"></i><span class="post-meta-label">阅读时长:</span><span>15分钟</span></span><span class="post-meta-separator">|</span><span class="post-meta-pv-cv" id="" data-flag-title=""><i class="far fa-eye fa-fw post-meta-icon"></i><span class="post-meta-label">浏览量:</span><span id="busuanzi_value_page_pv"><i class="fa-solid fa-spinner fa-spin"></i></span></span></div></div></div></header><main class="layout" id="content-inner"><div id="post"><div class="top-img gist" style="background-image: url(https://image-host-for-meta.oss-cn-hangzhou.aliyuncs.com/blog-img/2025-03-12%20122109.png)"></div><article class="container post-content" id="article-container"><p><strong>“Failure is an option here. If things are not failing, you are not innovating enough.”</strong>——Elon Musk</p>
+<h1 id="过程概述"><a href="#过程概述" class="headerlink" title="过程概述"></a>过程概述</h1><h2 id="发射阶段（Liftoff）"><a href="#发射阶段（Liftoff）" class="headerlink" title="发射阶段（Liftoff）"></a>发射阶段（Liftoff）</h2><ul>
+<li>火箭继续以倾角 $\theta_0$ 上升，速度逐渐增加。</li>
+<li>空气阻力与速度方向相反，需要考虑空气阻力的影响。</li>
+<li>火箭的姿态可能会随时间调整（例如通过控制舵面或推力矢量控制）。</li>
+</ul>
+<p><strong>相关公式：</strong></p>
+<ul>
+<li><p>推力：<br>$<br>F = \dot{m} v_e + A_e (P_e - P_0)<br>$<br>其中，$ \dot{m} $ 为推进剂流量，$ v_e $ 为喷射气体速度，$ A_e $ 为喷口面积，$ P_e $ 和 $ P_0 $ 分别为喷口出口压力和大气压力。</p>
+</li>
+<li><p>质量变化：<br>$<br>m(t) = m_0 - \dot{m} t<br>$<br>其中，$ m_0 $ 为火箭的初始质量。</p>
+</li>
+<li><p>加速度：<br>$<br>a = \frac{F}{m} - g - \frac{1}{2} C_D \rho v^2 A / m<br>$<br>其中，$ C_D $ 为阻力系数，$ \rho $ 为空气密度，$ v $ 为火箭的速度，$ A $ 为火箭的迎风面积，$ g $ 为重力加速度。</p>
+</li>
+<li><p>速度：<br>$<br>v(t) = \int a \, dt<br>$</p>
+</li>
+<li><p>位置：<br>$<br>h(t) = \int v \, dt<br>$</p>
+</li>
+</ul>
+<hr>
+<h2 id="倾斜上升阶段（Inclined-Ascent）"><a href="#倾斜上升阶段（Inclined-Ascent）" class="headerlink" title="倾斜上升阶段（Inclined Ascent）"></a>倾斜上升阶段（Inclined Ascent）</h2><ul>
+<li>火箭继续以倾角 $\theta_0$ 上升，速度逐渐增加。</li>
+<li>空气阻力与速度方向相反，需要考虑空气阻力的影响。</li>
+<li>火箭的姿态可能会随时间调整（例如通过控制舵面或推力矢量控制）。</li>
+</ul>
+<p><strong>相关公式：</strong></p>
+<ul>
+<li><p>推力：<br>$<br>F = \dot{m} v_e + A_e (P_e - P_0)<br>$</p>
+</li>
+<li><p>质量变化：<br>$<br>m(t) = m_0 - \dot{m} t<br>$</p>
+</li>
+<li><p>加速度：<br>$<br>a = \frac{F}{m} - g - \frac{1}{2} C_D \rho v^2 A / m<br>$</p>
+</li>
+<li><p>速度：<br>$<br>v(t) = \int a \, dt<br>$</p>
+</li>
+<li><p>位置：<br>$<br>h(t) = \int v \, dt<br>$</p>
+</li>
+</ul>
+<hr>
+<h2 id="重力转弯阶段（Gravity-Turn）"><a href="#重力转弯阶段（Gravity-Turn）" class="headerlink" title="重力转弯阶段（Gravity Turn）"></a>重力转弯阶段（Gravity Turn）</h2><ul>
+<li>火箭在倾斜上升过程中，重力会逐渐改变火箭的飞行方向，使其轨迹向水平方向弯曲。</li>
+<li>这一过程通常不需要额外的控制输入，而是由重力和火箭的初始倾角自然形成。</li>
+</ul>
+<p><strong>相关公式：</strong></p>
+<ul>
+<li><p>重力转弯角度变化：<br>$<br>\frac{d\gamma}{dt} = \frac{F_T \sin(\theta)}{m v} - g \cos(\gamma)<br>$<br>其中，$\gamma$ 为俯仰角，$ F_T $ 为推力，$ m $ 为火箭质量，$ v $ 为火箭速度，$ \theta $ 为倾角，$ g $ 为重力加速度。</p>
+</li>
+<li><p>速度变化：<br>$<br>\mathbf{v} = \int a \, dt<br>$<br>此处 $a$ 为重力转弯阶段的加速度。</p>
+</li>
+</ul>
+<hr>
+<h2 id="空速下降阶段（Airspeed-Descent）"><a href="#空速下降阶段（Airspeed-Descent）" class="headerlink" title="空速下降阶段（Airspeed Descent）"></a>空速下降阶段（Airspeed Descent）</h2><ul>
+<li>火箭在重力转弯后，开始以空速下降，速度逐渐减小。</li>
+<li>空气阻力与速度方向相反，需要考虑空气阻力的影响。</li>
+<li>火箭的姿态可能会随时间调整（例如通过控制舵面或推力矢量控制）。</li>
+</ul>
+<p><strong>相关公式：</strong></p>
+<ul>
+<li><p>空气阻力：<br>$<br>F_D = \frac{1}{2} C_D \rho v^2 A<br>$<br>其中，$ v $ 为火箭的空速，$ C_D $ 为阻力系数，$ \rho $ 为空气密度，$ A $ 为迎风面积。</p>
+</li>
+<li><p>速度变化：<br>$<br>v(t) = \int \left( \frac{F_T}{m} - g - \frac{1}{2} C_D \rho v^2 A / m \right) dt<br>$</p>
+</li>
+<li><p>位置变化：<br>$<br>h(t) = \int v \, dt<br>$</p>
+</li>
+</ul>
+<hr>
+<h2 id="空速着陆阶段（Airspeed-Landing）"><a href="#空速着陆阶段（Airspeed-Landing）" class="headerlink" title="空速着陆阶段（Airspeed Landing）"></a>空速着陆阶段（Airspeed Landing）</h2><ul>
+<li>火箭在空速下降后，开始以空速着陆，速度逐渐减小。</li>
+<li>空气阻力与速度方向相反，需要考虑空气阻力的影响。</li>
+<li>火箭的姿态可能会随时间调整（例如通过控制舵面或推力矢量控制）。</li>
+</ul>
+<p><strong>相关公式：</strong></p>
+<ul>
+<li><p>空气阻力：<br>$<br>F_D = \frac{1}{2} C_D \rho v^2 A<br>$</p>
+</li>
+<li><p>速度变化：<br>$<br>v(t) = \int \left( - g - \frac{1}{2} C_D \rho v^2 A / m \right) dt<br>$</p>
+</li>
+<li><p>位置变化：<br>$<br>h(t) = \int v \, dt<br>$</p>
+</li>
+</ul>
+<hr>
+<h2 id="着陆阶段（Landing）"><a href="#着陆阶段（Landing）" class="headerlink" title="着陆阶段（Landing）"></a>着陆阶段（Landing）</h2><ul>
+<li>火箭在空速着陆后，开始以着陆速度着陆，速度逐渐减小。</li>
+<li>空气阻力与速度方向相反，需要考虑空气阻力的影响。</li>
+</ul>
+<p><strong>相关公式：</strong></p>
+<ul>
+<li><p>空气阻力：<br>$<br>F_D = \frac{1}{2} C_D \rho v^2 A<br>$</p>
+</li>
+<li><p>速度变化：<br>$<br>v(t) = \int \left( - g - \frac{1}{2} C_D \rho v^2 A / m \right) dt<br>$</p>
+</li>
+<li><p>位置变化：<br>$<br>h(t) = \int v \, dt<br>$</p>
+</li>
+</ul>
+<hr>
+<h1 id="火箭六阶段运动仿真方程（刚体物理-空气动力学）"><a href="#火箭六阶段运动仿真方程（刚体物理-空气动力学）" class="headerlink" title="火箭六阶段运动仿真方程（刚体物理 + 空气动力学）"></a>火箭六阶段运动仿真方程（刚体物理 + 空气动力学）</h1><h2 id="火箭模型假设"><a href="#火箭模型假设" class="headerlink" title="火箭模型假设"></a>火箭模型假设</h2><ul>
+<li><strong>几何形状：</strong> 圆柱 + 圆锥组合</li>
+<li><strong>质心变化：</strong> 由于燃料燃烧，质心沿纵轴下降</li>
+<li><strong>空气动力学：</strong> 考虑空气阻力、风力、重力、推力</li>
+<li><strong>旋转动力学：</strong> 考虑火箭的角动量变化（绕质心旋转）</li>
+</ul>
+<h2 id="火箭模型参数"><a href="#火箭模型参数" class="headerlink" title="火箭模型参数"></a>火箭模型参数</h2><ul>
+<li><strong>质量：</strong>  $ m(t) = m_0 - \dot{m} t  $（线性减少，假设均匀燃烧）</li>
+<li><strong>质心位置：</strong>  $ r_c(t)  $ 逐渐向下（圆锥部分燃尽后下降）</li>
+<li><strong>惯性矩：</strong>  $ I = I<em>{cone} + I</em>{cylinder}  $（绕质心计算）<ul>
+<li>$ I<em>{cone} = \frac{3}{10} m</em>{cone} R^2  $</li>
+<li>$ I<em>{cylinder} = \frac{1}{2} m</em>{cylinder} R^2  $</li>
+</ul>
+</li>
+<li><strong>空气阻力（沿速度方向）：</strong>  $ F_D = \frac{1}{2} C_D \rho v^2 A  $</li>
+<li><strong>风力作用：</strong>  $ F_W = \frac{1}{2} C_L \rho v_w^2 A  $，其中  $ C_L  $ 是升力系数， $ v_w  $ 是风速</li>
+<li><strong>推力  $ F_T  $ 的方向随火箭姿态变化：</strong>  $ F_T = \dot{m} v_e  $，其中  $ v_e  $ 是喷射气体速度</li>
+</ul>
+<hr>
+<h2 id="六阶段运动方程"><a href="#六阶段运动方程" class="headerlink" title="六阶段运动方程"></a>六阶段运动方程</h2><h3 id="1-发射阶段（Liftoff）"><a href="#1-发射阶段（Liftoff）" class="headerlink" title="1. 发射阶段（Liftoff）"></a>1. 发射阶段（Liftoff）</h3><ul>
+<li>火箭从地面垂直升起，初始倾角  $ \theta_0  $</li>
+<li>受推力、重力、空气阻力影响</li>
+</ul>
+<p><strong>平动方程（牛顿第二定律）：</strong></p>
+<script type="math/tex; mode=display">
+ m \frac{d\mathbf{v}}{dt} = F_T \hat{e}_T - mg \hat{e}_z - F_D \hat{e}_v + F_W \hat{e}_w</script><p><strong>角动量方程（Euler方程）：</strong></p>
+<script type="math/tex; mode=display">
+ I \frac{d\omega}{dt} = M_{\text{wind}} + M_{\text{thrust}} + M_{\text{drag}}</script><h3 id="2-倾斜上升阶段（Inclined-Ascent）"><a href="#2-倾斜上升阶段（Inclined-Ascent）" class="headerlink" title="2. 倾斜上升阶段（Inclined Ascent）"></a>2. 倾斜上升阶段（Inclined Ascent）</h3><ul>
+<li>火箭倾角  $ \theta  $ 逐渐增大，风力影响显著</li>
+<li>受推力、重力、空气阻力、风力作用</li>
+</ul>
+<p><strong>平动方程：</strong></p>
+<script type="math/tex; mode=display">
+ m \frac{d\mathbf{v}}{dt} = F_T \hat{e}_T - mg \hat{e}_z - F_D \hat{e}_v + F_W \hat{e}_w</script><p><strong>角动量方程：</strong></p>
+<script type="math/tex; mode=display">
+ I \frac{d\omega}{dt} = M_{\text{wind}} + M_{\text{thrust}} + M_{\text{drag}}</script><p>其中：</p>
+<ul>
+<li><strong>风力矩：</strong>  $ M_{\text{wind}} = r_c \times F_W  $</li>
+<li><strong>推力矩：</strong>  $ M_{\text{thrust}} = d \times F_T  $（假设推力偏离质心）</li>
+</ul>
+<h3 id="3-重力转弯阶段（Gravity-Turn）"><a href="#3-重力转弯阶段（Gravity-Turn）" class="headerlink" title="3. 重力转弯阶段（Gravity Turn）"></a>3. 重力转弯阶段（Gravity Turn）</h3><ul>
+<li>火箭逐渐由垂直转向水平</li>
+<li>主要受重力和空气阻力影响</li>
+</ul>
+<p><strong>角加速度方程：</strong></p>
+<script type="math/tex; mode=display">
+ \frac{d\gamma}{dt} = \frac{1}{v} \left( \frac{F_T \sin\theta}{m} - g \cos\gamma \right)</script><h3 id="4-推进剂耗尽阶段（Burnout）"><a href="#4-推进剂耗尽阶段（Burnout）" class="headerlink" title="4. 推进剂耗尽阶段（Burnout）"></a>4. 推进剂耗尽阶段（Burnout）</h3><ul>
+<li>推力消失，仅受重力和空气阻力影响</li>
+</ul>
+<p><strong>平动方程：</strong></p>
+<script type="math/tex; mode=display">
+ m \frac{d\mathbf{v}}{dt} = -mg \hat{e}_z - F_D \hat{e}_v + F_W \hat{e}_w</script><h3 id="5-自由飞行阶段（Free-Flight）"><a href="#5-自由飞行阶段（Free-Flight）" class="headerlink" title="5. 自由飞行阶段（Free Flight）"></a>5. 自由飞行阶段（Free Flight）</h3><ul>
+<li>进入弹道飞行或轨道</li>
+<li>仅受重力和空气阻力作用</li>
+</ul>
+<p><strong>平动方程：</strong></p>
+<script type="math/tex; mode=display">
+ m \frac{d\mathbf{v}}{dt} = -mg \hat{e}_z - F_D \hat{e}_v + F_W \hat{e}_w</script><h3 id="6-降落阶段（Descent）"><a href="#6-降落阶段（Descent）" class="headerlink" title="6. 降落阶段（Descent）"></a>6. 降落阶段（Descent）</h3><ul>
+<li>考虑风力和空气阻力</li>
+</ul>
+<p><strong>平动方程：</strong></p>
+<script type="math/tex; mode=display">
+ m \frac{d\mathbf{v}}{dt} = -mg \hat{e}_z - F_D \hat{e}_v + F_W \hat{e}_w</script><hr>
+<h2 id="XYZ-三轴运动方程"><a href="#XYZ-三轴运动方程" class="headerlink" title="XYZ 三轴运动方程"></a>XYZ 三轴运动方程</h2><h3 id="1-三轴加速度"><a href="#1-三轴加速度" class="headerlink" title="1. 三轴加速度"></a>1. 三轴加速度</h3><script type="math/tex; mode=display">
+\begin{array}{l}
+a_x = -\frac{1}{2} C_D \rho v^2 A \frac{v_x}{v} + a_{\text{wind},x}  \\
+a_y = -\frac{1}{2} C_D \rho v^2 A \frac{v_y}{v} + a_{\text{wind},y}  \\
+a_z = -g - \frac{1}{2} C_D \rho v^2 A \frac{v_z}{v} + a_{\text{wind},z}
+\end{array}</script><h3 id="2-三轴速度"><a href="#2-三轴速度" class="headerlink" title="2. 三轴速度"></a>2. 三轴速度</h3><script type="math/tex; mode=display">
+\begin{array}{l}
+ v_x = \int a_x \, dt  \\
+ v_y = \int a_y \, dt  \\
+ v_z = \int a_z \, dt  \\
+ \end{array}</script><h3 id="3-三轴位矢"><a href="#3-三轴位矢" class="headerlink" title="3. 三轴位矢"></a>3. 三轴位矢</h3><script type="math/tex; mode=display">
+\begin{array}{l}
+r_x = \int v_x \, dt \\
+r_y = \int v_y \, dt \\
+r_z = \int v_z \, dt \\
+\end{array}</script><h1 id="程序初步仿真"><a href="#程序初步仿真" class="headerlink" title="程序初步仿真"></a>程序初步仿真</h1><div class="note info no-icon flat"><p>本人还<strong>不是挺懂</strong>这个物理模型，所以就没有用具体的流体力学的粒子模型，而是用简单的空气阻力模型，所以可能和实际有误差。  </p>
+</div> 
+<div class="note primary no-icon flat"><p>这里很推荐一个<code>plotly</code>的库：<br>这个库可以将三维数据<strong>可视化</strong>，并且可以动态展示。<br>接口也很简单，可以参考这个<a target="_blank" rel="noopener external nofollow noreferrer" href="https://plotly.com/python/3d-scatter-plots/">链接</a>。<br>它还有其他很好玩的功能，我认为是现代matlab可视化的一个很好的替代品。  </p>
+</div>  
+<h2 id="具体模拟程序如下："><a href="#具体模拟程序如下：" class="headerlink" title="具体模拟程序如下："></a>具体模拟程序如下：</h2><p>利用了<code>scipy</code>的<code>solve_ivp</code>函数，这个函数可以用来求解常微分方程，还有<code>plotly</code>库来可视化结果。<br><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br><span class="line">86</span><br><span class="line">87</span><br><span class="line">88</span><br><span class="line">89</span><br><span class="line">90</span><br><span class="line">91</span><br><span class="line">92</span><br><span class="line">93</span><br><span class="line">94</span><br><span class="line">95</span><br><span class="line">96</span><br><span class="line">97</span><br><span class="line">98</span><br><span class="line">99</span><br><span class="line">100</span><br><span class="line">101</span><br><span class="line">102</span><br><span class="line">103</span><br><span class="line">104</span><br><span class="line">105</span><br><span class="line">106</span><br><span class="line">107</span><br><span class="line">108</span><br><span class="line">109</span><br><span class="line">110</span><br><span class="line">111</span><br><span class="line">112</span><br><span class="line">113</span><br><span class="line">114</span><br><span class="line">115</span><br><span class="line">116</span><br><span class="line">117</span><br><span class="line">118</span><br><span class="line">119</span><br><span class="line">120</span><br><span class="line">121</span><br><span class="line">122</span><br><span class="line">123</span><br><span class="line">124</span><br><span class="line">125</span><br><span class="line">126</span><br><span class="line">127</span><br><span class="line">128</span><br><span class="line">129</span><br><span class="line">130</span><br><span class="line">131</span><br><span class="line">132</span><br><span class="line">133</span><br><span class="line">134</span><br><span class="line">135</span><br><span class="line">136</span><br><span class="line">137</span><br><span class="line">138</span><br><span class="line">139</span><br><span class="line">140</span><br><span class="line">141</span><br><span class="line">142</span><br><span class="line">143</span><br><span class="line">144</span><br><span class="line">145</span><br><span class="line">146</span><br><span class="line">147</span><br><span class="line">148</span><br><span class="line">149</span><br><span class="line">150</span><br><span class="line">151</span><br><span class="line">152</span><br><span class="line">153</span><br><span class="line">154</span><br><span class="line">155</span><br><span class="line">156</span><br><span class="line">157</span><br><span class="line">158</span><br><span class="line">159</span><br><span class="line">160</span><br><span class="line">161</span><br><span class="line">162</span><br><span class="line">163</span><br><span class="line">164</span><br><span class="line">165</span><br><span class="line">166</span><br><span class="line">167</span><br><span class="line">168</span><br><span class="line">169</span><br><span class="line">170</span><br><span class="line">171</span><br><span class="line">172</span><br><span class="line">173</span><br><span class="line">174</span><br><span class="line">175</span><br><span class="line">176</span><br><span class="line">177</span><br><span class="line">178</span><br><span class="line">179</span><br><span class="line">180</span><br><span class="line">181</span><br><span class="line">182</span><br><span class="line">183</span><br><span class="line">184</span><br><span class="line">185</span><br><span class="line">186</span><br><span class="line">187</span><br><span class="line">188</span><br><span class="line">189</span><br><span class="line">190</span><br><span class="line">191</span><br><span class="line">192</span><br><span class="line">193</span><br><span class="line">194</span><br><span class="line">195</span><br><span class="line">196</span><br><span class="line">197</span><br><span class="line">198</span><br><span class="line">199</span><br><span class="line">200</span><br><span class="line">201</span><br><span class="line">202</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> numpy <span class="keyword">as</span> np</span><br><span class="line"><span class="keyword">from</span> scipy.integrate <span class="keyword">import</span> solve_ivp</span><br><span class="line"><span class="keyword">import</span> plotly.graph_objects <span class="keyword">as</span> go</span><br><span class="line"><span class="keyword">from</span> plotly.subplots <span class="keyword">import</span> make_subplots</span><br><span class="line"></span><br><span class="line"><span class="comment"># ----------------------------</span></span><br><span class="line"><span class="comment"># 常量与参数设置</span></span><br><span class="line"><span class="comment"># ----------------------------</span></span><br><span class="line">g = <span class="number">9.81</span>       <span class="comment"># 重力加速度 (m/s^2)</span></span><br><span class="line">rho = <span class="number">1.225</span>    <span class="comment"># 海平面空气密度 (kg/m^3)</span></span><br><span class="line">m0 = <span class="number">20.0</span></span><br><span class="line">m_final = <span class="number">5.0</span> <span class="comment"># 火箭初始/燃尽质量 (kg)</span></span><br><span class="line">burn_time = <span class="number">3.0</span> <span class="comment"># 燃烧时间 (s)</span></span><br><span class="line">m_dot_val = (m0 - m_final) / burn_time <span class="comment"># 质量流失率 (kg/s)</span></span><br><span class="line">v_e = <span class="number">1500.0</span> <span class="comment"># 有效排气速度 (m/s)</span></span><br><span class="line">F_T_const = m_dot_val * v_e <span class="comment"># 推力 (N) = m_dot * v_e</span></span><br><span class="line">C_D = <span class="number">0.75</span></span><br><span class="line">diameter = <span class="number">0.2</span> <span class="comment"># 空气阻力系数与迎风面积</span></span><br><span class="line">A = np.pi * (diameter/<span class="number">2</span>)**<span class="number">2</span>  <span class="comment"># 迎风面积</span></span><br><span class="line">v_w = np.array([-<span class="number">3.0</span>, <span class="number">4.0</span>, <span class="number">0.0</span>]) <span class="comment"># 风速 (m/s)，例如：[-3, 4, 0] 表示在 x 负方向和 y 正方向上</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># 发射角度设置：与正北夹角 87.4°，仰角 85°</span></span><br><span class="line">azimuth_deg = <span class="number">87.4</span>   </span><br><span class="line">elevation_deg = <span class="number">85.0</span></span><br><span class="line">azimuth = np.deg2rad(azimuth_deg)</span><br><span class="line">elevation = np.deg2rad(elevation_deg)</span><br><span class="line"></span><br><span class="line"><span class="comment"># 推力方向 (单位矢量)，坐标：x正东、y正北、z正上</span></span><br><span class="line">thrust_dir = np.array([</span><br><span class="line">    np.cos(elevation) * np.sin(azimuth),</span><br><span class="line">    np.cos(elevation) * np.cos(azimuth),</span><br><span class="line">    np.sin(elevation)</span><br><span class="line">])</span><br><span class="line">thrust_dir = thrust_dir / np.linalg.norm(thrust_dir)</span><br><span class="line"></span><br><span class="line"><span class="comment"># ----------------------------</span></span><br><span class="line"><span class="comment"># 定义火箭动力学模型（ODE）</span></span><br><span class="line"><span class="comment"># 状态变量： [x, y, z, vx, vy, vz, m]</span></span><br><span class="line"><span class="comment"># ----------------------------</span></span><br><span class="line"><span class="keyword">def</span> <span class="title function_">rocket_dynamics</span>(<span class="params">t, state</span>):</span><br><span class="line">    x, y, z, vx, vy, vz, m = state</span><br><span class="line">    vel = np.array([vx, vy, vz])</span><br><span class="line">    <span class="keyword">if</span> t &lt; burn_time:</span><br><span class="line">        F_thrust = F_T_const * thrust_dir</span><br><span class="line">        dm_dt = -m_dot_val</span><br><span class="line">    <span class="keyword">else</span>:</span><br><span class="line">        F_thrust = np.array([<span class="number">0.0</span>, <span class="number">0.0</span>, <span class="number">0.0</span>])</span><br><span class="line">        dm_dt = <span class="number">0.0</span></span><br><span class="line">    v_rel = vel - v_w</span><br><span class="line">    v_rel_norm = np.linalg.norm(v_rel)</span><br><span class="line">    <span class="keyword">if</span> v_rel_norm &lt; <span class="number">1e-6</span>:</span><br><span class="line">        F_drag = np.array([<span class="number">0.0</span>, <span class="number">0.0</span>, <span class="number">0.0</span>])</span><br><span class="line">    <span class="keyword">else</span>:</span><br><span class="line">        F_drag = -<span class="number">0.5</span> * C_D * rho * v_rel_norm**<span class="number">2</span> * A * (v_rel / v_rel_norm)</span><br><span class="line">    F_gravity = np.array([<span class="number">0.0</span>, <span class="number">0.0</span>, -m*g])</span><br><span class="line">    F_total = F_thrust + F_drag + F_gravity</span><br><span class="line">    accel = F_total / m</span><br><span class="line"></span><br><span class="line">    <span class="keyword">return</span> [vx, vy, vz, accel[<span class="number">0</span>], accel[<span class="number">1</span>], accel[<span class="number">2</span>], dm_dt]</span><br><span class="line"></span><br><span class="line"><span class="comment"># ----------------------------</span></span><br><span class="line"><span class="comment"># 定义事件函数：火箭落地（z &lt;= 0）时终止积分</span></span><br><span class="line"><span class="comment"># ----------------------------</span></span><br><span class="line"><span class="keyword">def</span> <span class="title function_">hit_ground</span>(<span class="params">t, state</span>):</span><br><span class="line">    <span class="keyword">return</span> state[<span class="number">2</span>]  <span class="comment"># z 分量</span></span><br><span class="line"></span><br><span class="line">hit_ground.terminal = <span class="literal">True</span></span><br><span class="line">hit_ground.direction = -<span class="number">1</span> </span><br><span class="line"></span><br><span class="line"><span class="comment"># ----------------------------</span></span><br><span class="line"><span class="comment"># 初始条件与数值积分</span></span><br><span class="line"><span class="comment"># ----------------------------</span></span><br><span class="line">initial_state = [<span class="number">0.0</span>, <span class="number">0.0</span>, <span class="number">0.0</span>, <span class="number">0.0</span>, <span class="number">0.0</span>, <span class="number">0.0</span>, m0]</span><br><span class="line">t_span = (<span class="number">0</span>, <span class="number">60</span>)</span><br><span class="line"></span><br><span class="line">sol = solve_ivp(rocket_dynamics, t_span, initial_state, </span><br><span class="line">                events=hit_ground, max_step=<span class="number">0.01</span>, rtol=<span class="number">1e-8</span>, atol=<span class="number">1e-8</span>)</span><br><span class="line"></span><br><span class="line">t_vals = sol.t</span><br><span class="line">x_vals = sol.y[<span class="number">0</span>]</span><br><span class="line">y_vals = sol.y[<span class="number">1</span>]</span><br><span class="line">z_vals = sol.y[<span class="number">2</span>]</span><br><span class="line">vx_vals = sol.y[<span class="number">3</span>]</span><br><span class="line">vy_vals = sol.y[<span class="number">4</span>]</span><br><span class="line">vz_vals = sol.y[<span class="number">5</span>]</span><br><span class="line">m_vals  = sol.y[<span class="number">6</span>]</span><br><span class="line"></span><br><span class="line"><span class="comment"># 计算速度大小 speed(t)</span></span><br><span class="line">speed_vals = np.sqrt(vx_vals**<span class="number">2</span> + vy_vals**<span class="number">2</span> + vz_vals**<span class="number">2</span>)</span><br><span class="line"></span><br><span class="line"><span class="comment"># 计算加速度 (ax, ay, az) 以及加速度大小</span></span><br><span class="line">acc_array = np.zeros((<span class="number">3</span>, <span class="built_in">len</span>(t_vals)))</span><br><span class="line"><span class="keyword">for</span> i <span class="keyword">in</span> <span class="built_in">range</span>(<span class="built_in">len</span>(t_vals)):</span><br><span class="line">    dxdt = rocket_dynamics(t_vals[i], sol.y[:, i])</span><br><span class="line">    <span class="comment"># dxdt = [vx, vy, vz, ax, ay, az, dm_dt]</span></span><br><span class="line">    acc_array[<span class="number">0</span>, i] = dxdt[<span class="number">3</span>]</span><br><span class="line">    acc_array[<span class="number">1</span>, i] = dxdt[<span class="number">4</span>]</span><br><span class="line">    acc_array[<span class="number">2</span>, i] = dxdt[<span class="number">5</span>]</span><br><span class="line">acc_mag = np.sqrt(acc_array[<span class="number">0</span>]**<span class="number">2</span> + acc_array[<span class="number">1</span>]**<span class="number">2</span> + acc_array[<span class="number">2</span>]**<span class="number">2</span>)</span><br><span class="line"></span><br><span class="line"><span class="built_in">print</span>(<span class="string">f&quot;仿真结束时间：<span class="subst">&#123;t_vals[-<span class="number">1</span>]:<span class="number">.2</span>f&#125;</span> s&quot;</span>)</span><br><span class="line"><span class="built_in">print</span>(<span class="string">f&quot;落地时火箭位置：x=<span class="subst">&#123;x_vals[-<span class="number">1</span>]:<span class="number">.2</span>f&#125;</span> m, y=<span class="subst">&#123;y_vals[-<span class="number">1</span>]:<span class="number">.2</span>f&#125;</span> m&quot;</span>)</span><br><span class="line"><span class="built_in">print</span>(<span class="string">f&quot;最远水平距离：<span class="subst">&#123;np.sqrt(x_vals[-<span class="number">1</span>]**<span class="number">2</span> + y_vals[-<span class="number">1</span>]**<span class="number">2</span>):<span class="number">.2</span>f&#125;</span> m&quot;</span>)</span><br><span class="line"></span><br><span class="line"><span class="comment"># ----------------------------</span></span><br><span class="line"><span class="comment"># 准备 3D 轨迹图的 hover 信息 (位置、速度、加速度)</span></span><br><span class="line"><span class="comment"># ----------------------------</span></span><br><span class="line">hover_texts = []</span><br><span class="line"><span class="keyword">for</span> i <span class="keyword">in</span> <span class="built_in">range</span>(<span class="built_in">len</span>(t_vals)):</span><br><span class="line">    hover_texts.append(</span><br><span class="line">        <span class="string">f&quot;time = <span class="subst">&#123;t_vals[i]:<span class="number">.2</span>f&#125;</span> s&lt;br&gt;&quot;</span></span><br><span class="line">        <span class="string">f&quot;x = <span class="subst">&#123;x_vals[i]:<span class="number">.2</span>f&#125;</span> m, y = <span class="subst">&#123;y_vals[i]:<span class="number">.2</span>f&#125;</span> m, z = <span class="subst">&#123;z_vals[i]:<span class="number">.2</span>f&#125;</span> m&lt;br&gt;&quot;</span></span><br><span class="line">        <span class="string">f&quot;vx = <span class="subst">&#123;vx_vals[i]:<span class="number">.2</span>f&#125;</span>, vy = <span class="subst">&#123;vy_vals[i]:<span class="number">.2</span>f&#125;</span>, vz = <span class="subst">&#123;vz_vals[i]:<span class="number">.2</span>f&#125;</span> (m/s)&lt;br&gt;&quot;</span></span><br><span class="line">        <span class="string">f&quot;ax = <span class="subst">&#123;acc_array[<span class="number">0</span>, i]:<span class="number">.2</span>f&#125;</span>, ay = <span class="subst">&#123;acc_array[<span class="number">1</span>, i]:<span class="number">.2</span>f&#125;</span>, az = <span class="subst">&#123;acc_array[<span class="number">2</span>, i]:<span class="number">.2</span>f&#125;</span> (m/s^2)&quot;</span></span><br><span class="line">    )</span><br><span class="line"></span><br><span class="line"><span class="comment"># ----------------------------</span></span><br><span class="line"><span class="comment"># 1) 绘制火箭 3D 轨迹图</span></span><br><span class="line"><span class="comment"># ----------------------------</span></span><br><span class="line">fig3d = go.Figure(data=[go.Scatter3d(</span><br><span class="line">    x=x_vals, y=y_vals, z=z_vals,</span><br><span class="line">    mode=<span class="string">&#x27;lines&#x27;</span>,</span><br><span class="line">    line=<span class="built_in">dict</span>(</span><br><span class="line">        width=<span class="number">4</span>,</span><br><span class="line">        color=speed_vals,        </span><br><span class="line">        colorscale=<span class="string">&#x27;Turbo&#x27;</span>,   </span><br><span class="line">        cmin=<span class="number">0</span>,</span><br><span class="line">        cmax=speed_vals.<span class="built_in">max</span>(),</span><br><span class="line">        colorbar=<span class="built_in">dict</span>(title=<span class="string">&#x27;Speed (m/s)&#x27;</span>),</span><br><span class="line">        showscale=<span class="literal">True</span>        </span><br><span class="line">    ),</span><br><span class="line">    text=hover_texts,</span><br><span class="line">    hoverinfo=<span class="string">&#x27;text&#x27;</span>,</span><br><span class="line">    name=<span class="string">&#x27;火箭轨迹&#x27;</span></span><br><span class="line">)])</span><br><span class="line">fig3d.update_layout(</span><br><span class="line">    title=<span class="string">&quot;火箭三维运动轨迹图&quot;</span>,</span><br><span class="line">    scene=<span class="built_in">dict</span>(</span><br><span class="line">        xaxis_title=<span class="string">&#x27;x (正东方向)&#x27;</span>,</span><br><span class="line">        yaxis_title=<span class="string">&#x27;y (正北方向)&#x27;</span>,</span><br><span class="line">        zaxis_title=<span class="string">&#x27;z (竖直向上)&#x27;</span></span><br><span class="line">    ),</span><br><span class="line">    width=<span class="number">800</span>,</span><br><span class="line">    height=<span class="number">800</span></span><br><span class="line">)</span><br><span class="line"></span><br><span class="line"><span class="comment"># ----------------------------</span></span><br><span class="line"><span class="comment"># 2) 绘制 x-t, y-t, z-t</span></span><br><span class="line"><span class="comment"># ----------------------------</span></span><br><span class="line">fig_xyz = make_subplots(rows=<span class="number">3</span>, cols=<span class="number">1</span>,</span><br><span class="line">                        subplot_titles=[<span class="string">&quot;x(t)&quot;</span>, <span class="string">&quot;y(t)&quot;</span>, <span class="string">&quot;z(t)&quot;</span>])</span><br><span class="line">fig_xyz.add_trace(go.Scatter(x=t_vals, y=x_vals, mode=<span class="string">&#x27;lines&#x27;</span>, name=<span class="string">&#x27;x(t)&#x27;</span>), row=<span class="number">1</span>, col=<span class="number">1</span>)</span><br><span class="line">fig_xyz.add_trace(go.Scatter(x=t_vals, y=y_vals, mode=<span class="string">&#x27;lines&#x27;</span>, name=<span class="string">&#x27;y(t)&#x27;</span>), row=<span class="number">2</span>, col=<span class="number">1</span>)</span><br><span class="line">fig_xyz.add_trace(go.Scatter(x=t_vals, y=z_vals, mode=<span class="string">&#x27;lines&#x27;</span>, name=<span class="string">&#x27;z(t)&#x27;</span>), row=<span class="number">3</span>, col=<span class="number">1</span>)</span><br><span class="line"></span><br><span class="line">fig_xyz.update_layout(height=<span class="number">900</span>, width=<span class="number">800</span>, title_text=<span class="string">&quot;火箭位置随时间变化&quot;</span>)</span><br><span class="line">fig_xyz.update_xaxes(title_text=<span class="string">&quot;时间 (s)&quot;</span>, row=<span class="number">3</span>, col=<span class="number">1</span>)</span><br><span class="line">fig_xyz.update_yaxes(title_text=<span class="string">&quot;x (m)&quot;</span>, row=<span class="number">1</span>, col=<span class="number">1</span>)</span><br><span class="line">fig_xyz.update_yaxes(title_text=<span class="string">&quot;y (m)&quot;</span>, row=<span class="number">2</span>, col=<span class="number">1</span>)</span><br><span class="line">fig_xyz.update_yaxes(title_text=<span class="string">&quot;z (m)&quot;</span>, row=<span class="number">3</span>, col=<span class="number">1</span>)</span><br><span class="line"></span><br><span class="line"><span class="comment"># ----------------------------</span></span><br><span class="line"><span class="comment"># 3) 绘制速度 (v-t) 图</span></span><br><span class="line"><span class="comment"># ----------------------------</span></span><br><span class="line">fig_v = make_subplots(rows=<span class="number">4</span>, cols=<span class="number">1</span>,</span><br><span class="line">                      subplot_titles=[<span class="string">&quot;vx(t)&quot;</span>, <span class="string">&quot;vy(t)&quot;</span>, <span class="string">&quot;vz(t)&quot;</span>, <span class="string">&quot;speed(t)&quot;</span>])</span><br><span class="line">fig_v.add_trace(go.Scatter(x=t_vals, y=vx_vals, mode=<span class="string">&#x27;lines&#x27;</span>, name=<span class="string">&#x27;vx&#x27;</span>), row=<span class="number">1</span>, col=<span class="number">1</span>)</span><br><span class="line">fig_v.add_trace(go.Scatter(x=t_vals, y=vy_vals, mode=<span class="string">&#x27;lines&#x27;</span>, name=<span class="string">&#x27;vy&#x27;</span>), row=<span class="number">2</span>, col=<span class="number">1</span>)</span><br><span class="line">fig_v.add_trace(go.Scatter(x=t_vals, y=vz_vals, mode=<span class="string">&#x27;lines&#x27;</span>, name=<span class="string">&#x27;vz&#x27;</span>), row=<span class="number">3</span>, col=<span class="number">1</span>)</span><br><span class="line">fig_v.add_trace(go.Scatter(x=t_vals, y=speed_vals, mode=<span class="string">&#x27;lines&#x27;</span>, name=<span class="string">&#x27;|v|&#x27;</span>), row=<span class="number">4</span>, col=<span class="number">1</span>)</span><br><span class="line"></span><br><span class="line">fig_v.update_layout(height=<span class="number">900</span>, width=<span class="number">800</span>, title_text=<span class="string">&quot;火箭速度随时间变化&quot;</span>)</span><br><span class="line">fig_v.update_xaxes(title_text=<span class="string">&quot;时间 (s)&quot;</span>, row=<span class="number">4</span>, col=<span class="number">1</span>)</span><br><span class="line">fig_v.update_yaxes(title_text=<span class="string">&quot;速度 (m/s)&quot;</span>, row=<span class="number">1</span>, col=<span class="number">1</span>)</span><br><span class="line">fig_v.update_yaxes(title_text=<span class="string">&quot;速度 (m/s)&quot;</span>, row=<span class="number">2</span>, col=<span class="number">1</span>)</span><br><span class="line">fig_v.update_yaxes(title_text=<span class="string">&quot;速度 (m/s)&quot;</span>, row=<span class="number">3</span>, col=<span class="number">1</span>)</span><br><span class="line">fig_v.update_yaxes(title_text=<span class="string">&quot;速度 (m/s)&quot;</span>, row=<span class="number">4</span>, col=<span class="number">1</span>)</span><br><span class="line"></span><br><span class="line"><span class="comment"># ----------------------------</span></span><br><span class="line"><span class="comment"># 4) 绘制加速度 (a-t) 图</span></span><br><span class="line"><span class="comment"># ----------------------------</span></span><br><span class="line">fig_a = make_subplots(rows=<span class="number">4</span>, cols=<span class="number">1</span>,</span><br><span class="line">                      subplot_titles=[<span class="string">&quot;ax(t)&quot;</span>, <span class="string">&quot;ay(t)&quot;</span>, <span class="string">&quot;az(t)&quot;</span>, <span class="string">&quot;acc magnitude(t)&quot;</span>])</span><br><span class="line">fig_a.add_trace(go.Scatter(x=t_vals, y=acc_array[<span class="number">0</span>], mode=<span class="string">&#x27;lines&#x27;</span>, name=<span class="string">&#x27;ax&#x27;</span>), row=<span class="number">1</span>, col=<span class="number">1</span>)</span><br><span class="line">fig_a.add_trace(go.Scatter(x=t_vals, y=acc_array[<span class="number">1</span>], mode=<span class="string">&#x27;lines&#x27;</span>, name=<span class="string">&#x27;ay&#x27;</span>), row=<span class="number">2</span>, col=<span class="number">1</span>)</span><br><span class="line">fig_a.add_trace(go.Scatter(x=t_vals, y=acc_array[<span class="number">2</span>], mode=<span class="string">&#x27;lines&#x27;</span>, name=<span class="string">&#x27;az&#x27;</span>), row=<span class="number">3</span>, col=<span class="number">1</span>)</span><br><span class="line">fig_a.add_trace(go.Scatter(x=t_vals, y=acc_mag, mode=<span class="string">&#x27;lines&#x27;</span>, name=<span class="string">&#x27;|a|&#x27;</span>), row=<span class="number">4</span>, col=<span class="number">1</span>)</span><br><span class="line"></span><br><span class="line">fig_a.update_layout(height=<span class="number">900</span>, width=<span class="number">800</span>, title_text=<span class="string">&quot;火箭加速度随时间变化&quot;</span>)</span><br><span class="line">fig_a.update_xaxes(title_text=<span class="string">&quot;时间 (s)&quot;</span>, row=<span class="number">4</span>, col=<span class="number">1</span>)</span><br><span class="line">fig_a.update_yaxes(title_text=<span class="string">&quot;加速度 (m/s^2)&quot;</span>, row=<span class="number">1</span>, col=<span class="number">1</span>)</span><br><span class="line">fig_a.update_yaxes(title_text=<span class="string">&quot;加速度 (m/s^2)&quot;</span>, row=<span class="number">2</span>, col=<span class="number">1</span>)</span><br><span class="line">fig_a.update_yaxes(title_text=<span class="string">&quot;加速度 (m/s^2)&quot;</span>, row=<span class="number">3</span>, col=<span class="number">1</span>)</span><br><span class="line">fig_a.update_yaxes(title_text=<span class="string">&quot;加速度 (m/s^2)&quot;</span>, row=<span class="number">4</span>, col=<span class="number">1</span>)</span><br><span class="line"></span><br><span class="line"><span class="comment"># ----------------------------</span></span><br><span class="line"><span class="comment"># 显示图像</span></span><br><span class="line"><span class="comment"># ----------------------------</span></span><br><span class="line">fig3d.show()</span><br><span class="line">fig_xyz.show()</span><br><span class="line">fig_v.show()</span><br><span class="line">fig_a.show()</span><br></pre></td></tr></table></figure></p>
+<p>其流程图如下：</p>
+<pre><code class="highlight mermaid">flowchart TD
+    B[定义常量与参数] --&gt; C[定义火箭动力学模型]
+    C --&gt; D[定义事件函数]
+    D --&gt; E[设置初始条件]
+    E --&gt; F[数值积分求解]
+    F --&gt; G[提取仿真结果]
+    G --&gt; H[计算速度和加速度]
+    H --&gt; I[绘制图表]
+    I --&gt; J[显示图像]</code></pre>
+<h2 id="该程序的缺点："><a href="#该程序的缺点：" class="headerlink" title="该程序的缺点："></a>该程序的缺点：</h2><ol>
+<li>没有考虑火箭的旋转，所以火箭的飞行轨迹是直线，没有倾斜。</li>
+<li>落地事件未考虑地形或其他障碍物的影响。如果火箭在仿真时间内未落地，程序会继续运行到最大时间，可能导致不必要的计算。</li>
+<li>3D 轨迹图仅显示火箭的路径，未显示其他信息（如推力方向、风速等）</li>
+<li>未提供动画功能，无法直观展示火箭的运动过程。</li>
+<li>未考虑火箭开伞时的降落过程。</li>
+</ol>
+<h2 id="提升空间："><a href="#提升空间：" class="headerlink" title="提升空间："></a>提升空间：</h2><ol>
+<li>添加火箭旋转模型，使火箭的飞行轨迹更加真实，并考虑火箭开伞时的降落过程，使仿真更加准确。</li>
+<li>添加其他信息（如推力方向、风速等）到 3D 轨迹图中，使图表更加直观。</li>
+<li>添加动画功能，使火箭的运动过程更加直观。</li>
+<li>加入RK45积分方法，提高积分精度，并加入实时轨迹更新功能，以及加入统计学的预测模型，对火箭的飞行轨迹进行预测。</li>
+</ol>
+</article><div class="post-copyright"><div class="post-copyright__author"><span class="post-copyright-meta"><i class="fas fa-circle-user fa-fw"></i>文章作者: </span><span class="post-copyright-info"><a href="https://www.teslongxiao.cn">Meta Xiao</a></span></div><div class="post-copyright__type"><span class="post-copyright-meta"><i class="fas fa-square-arrow-up-right fa-fw"></i>文章链接: </span><span class="post-copyright-info"><a href="https://www.teslongxiao.cn/posts/704d10ab.html">https://www.teslongxiao.cn/posts/704d10ab.html</a></span></div><div class="post-copyright__notice"><span class="post-copyright-meta"><i class="fas fa-circle-exclamation fa-fw"></i>版权声明: </span><span class="post-copyright-info">本博客所有文章除特别声明外，均采用 <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/" rel="external nofollow noreferrer" target="_blank">CC BY-NC-SA 4.0</a> 许可协议。转载请注明来源 <a href="https://www.teslongxiao.cn" target="_blank">浮生若梦</a>！</span></div></div><div class="tag_share"><div class="post-meta__tag-list"><a class="post-meta__tags" href="/tags/%E6%A8%A1%E6%8B%9F/">模拟</a><a class="post-meta__tags" href="/tags/%E7%89%A9%E7%90%86/">物理</a></div><div class="post-share"><div class="social-share" data-image="https://image-host-for-meta.oss-cn-hangzhou.aliyuncs.com/blog-img/2025-03-12%20122109.png" data-sites="facebook,twitter,wechat,weibo,qq"></div><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/butterfly-extsrc/sharejs/dist/css/share.min.css" media="print" onload="this.media='all'"><script src="https://cdn.jsdelivr.net/npm/butterfly-extsrc/sharejs/dist/js/social-share.min.js" defer></script></div></div><nav class="pagination-post" id="pagination"></nav><div class="relatedPosts"><div class="headline"><i class="fas fa-thumbs-up fa-fw"></i><span>相关推荐</span></div><div class="relatedPosts-list"><a class="pagination-related" href="/posts/c43560d9.html" title="低空落点预测具体方案(草稿)"><img class="cover" src="https://hkxb.buaa.edu.cn/fileup/1000-6893/FIGURE/2023-44-14/Images/1000-6893-2023-44-14-327964/95AB6966-1C41-41e6-ABF0-9222BCB5ADE1-F001.jpg" alt="cover"><div class="info text-center"><div class="info-1"><div class="info-item-1"><i class="far fa-calendar-alt fa-fw"></i> 2025-02-04</div><div class="info-item-2">低空落点预测具体方案(草稿)</div></div><div class="info-2"><div class="info-item-1">项目目的 对低空飞行器紧急坠落场景构建实时落点预测系统   项目意义提升低空飞行安全性随着低空飞行器，尤其是无人机和探空火箭的普及，紧急坠落和失控事故的风险不断增加。通过实现精准的实时落点预测，能够大幅提升飞行安全性，提前识别潜在风险，降低人员和财产损失。 推进无人机与火箭技术发展项目通过对无人机故障模式的建模与预测，及火箭飞行的精准模拟与预测，为低空飞行器的飞行控制与事故预防提供了有力的技术支持，也推动了无人机和火箭技术的创新和突破。 推动智能预警系统应用落地本项目通过融合多源数据与边缘计算的技术，推动实时预警系统在多个领域的应用，特别是在救灾、环境监测、物流运输等场景中，具有重要的商业和社会价值。 技术路线规划1. 短期目标：探空火箭实时预警系统（0-6个月）核心组件    模块 技术方案 关键参数     火箭实验平台 3D打印箭体+商用航电套件 飞行高度≤500m，载荷≤2kg   传感器阵列 9轴IMU+大气压计+GPS模块 采样频率≥200Hz，定位精度±0.5m   数据传输 LoRa+4G双模传输 延迟≤300ms，丢包率&lt;1%     实施流程graph...</div></div></div></a><a class="pagination-related" href="/posts/c72ae656.html" title="复刻三国杀"><div class="cover" style="background: var(--default-bg-color)"></div><div class="info text-center"><div class="info-1"><div class="info-item-1"><i class="far fa-calendar-alt fa-fw"></i> 2025-03-15</div><div class="info-item-2">复刻三国杀</div></div><div class="info-2"><div class="info-item-1">开始1v1游戏规则比赛规则所谓KOF赛制，指的就是在竞技比赛过程中，两队人马轮番派人上阵较量，输者败后离场，换队内其他战友上阵，直至某队无人可上为止，从而分出胜负。...</div></div></div></a><a class="pagination-related" href="/posts/3de51743.html" title="桌球碰撞"><img class="cover" src="https://th.bing.com/th/id/OIP.F_8ED-PP2GX-bE_TDHlrdQHaE8?w=1600&h=1067&rs=1&pid=ImgDetMain" alt="cover"><div class="info text-center"><div class="info-1"><div class="info-item-1"><i class="far fa-calendar-alt fa-fw"></i> 2025-02-01</div><div class="info-item-2">桌球碰撞</div></div><div class="info-2"><div class="info-item-1">引入在3B1B的一期视频中讲到了一种运用镜像对称来化简桌球的碰撞问题，那么能不能求这样一个问题：  在不考虑摩擦、转动的桌球上，已知入射点位置和方向，能否找到某个次数p，使得在p次与台面边缘的碰撞后回到出发点？   建模由于桌球是圆的，所以碰撞时桌球与台面接触的边界是圆弧，因此我们考虑圆心与台面接触的边界，即圆心与台面接触的圆弧。这里我们先考虑一般的情况，即桌球与台面的边界斜碰，而桌球与台面正碰以及与边界的角正碰都必有碰撞次数1使得桌球返回原点。    我们不妨先考虑长为a、宽为b的桌球台面，其边界即为碰撞边界，某个球在 \( \left ( x_{0}, y_{0} \right ) \) 的位置，其入射向量为 \( \vec{s} = \left ( u_{0}, v_{0} \right ) \) 如图建立坐标系：   考虑多次反弹后有以下模型：当桌球与任意边界碰撞时，以该边界为对称轴，作其边界的镜像，桌球与该边界碰撞后，其位置与入射向量均变为镜像的对应值，即：  本文还在施工，未完待续… </div></div></div></a></div></div></div><div class="aside-content" id="aside-content"><div class="card-widget card-info text-center"><div class="avatar-img"><img src="https://image-host-for-meta.oss-cn-hangzhou.aliyuncs.com/blog-img/1737896078867.gif" onerror="this.onerror=null;this.src='/img/friend_404.gif'" alt="avatar"/></div><div class="author-info-name">Meta Xiao</div><div class="author-info-description">学习知识，记录生活，分享感悟</div><div class="site-data"><a href="/archives/"><div class="headline">文章</div><div class="length-num">10</div></a><a href="/tags/"><div class="headline">标签</div><div class="length-num">7</div></a><a href="/categories/"><div class="headline">分类</div><div class="length-num">6</div></a></div><a id="card-info-btn" target="_blank" rel="noopener external nofollow noreferrer" href="https://github.com/META-Xiao"><i class="fab fa-github"></i><span>Follow Me</span></a><div class="card-info-social-icons"><a class="social-icon" href="https://github.com/META-Xiao" rel="external nofollow noreferrer" target="_blank" title="Github"><i class="fab fa-github" style="color: #24292e;"></i></a><a class="social-icon" href="mailto:2040426884@qq.com" rel="external nofollow noreferrer" target="_blank" title="Email"><i class="fas fa-envelope" style="color: #4a7dbe;"></i></a></div></div><div class="card-widget card-announcement"><div class="item-headline"><i class="fas fa-bullhorn fa-shake"></i><span>公告</span></div><div class="announcement_content">This is my Blog</div></div><div class="sticky_layout"><div class="card-widget" id="card-toc"><div class="item-headline"><i class="fas fa-stream"></i><span>目录</span><span class="toc-percentage"></span></div><div class="toc-content"><ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#%E8%BF%87%E7%A8%8B%E6%A6%82%E8%BF%B0"><span class="toc-number">1.</span> <span class="toc-text">过程概述</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%8F%91%E5%B0%84%E9%98%B6%E6%AE%B5%EF%BC%88Liftoff%EF%BC%89"><span class="toc-number">1.1.</span> <span class="toc-text">发射阶段（Liftoff）</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%80%BE%E6%96%9C%E4%B8%8A%E5%8D%87%E9%98%B6%E6%AE%B5%EF%BC%88Inclined-Ascent%EF%BC%89"><span class="toc-number">1.2.</span> <span class="toc-text">倾斜上升阶段（Inclined Ascent）</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E9%87%8D%E5%8A%9B%E8%BD%AC%E5%BC%AF%E9%98%B6%E6%AE%B5%EF%BC%88Gravity-Turn%EF%BC%89"><span class="toc-number">1.3.</span> <span class="toc-text">重力转弯阶段（Gravity Turn）</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E7%A9%BA%E9%80%9F%E4%B8%8B%E9%99%8D%E9%98%B6%E6%AE%B5%EF%BC%88Airspeed-Descent%EF%BC%89"><span class="toc-number">1.4.</span> <span class="toc-text">空速下降阶段（Airspeed Descent）</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E7%A9%BA%E9%80%9F%E7%9D%80%E9%99%86%E9%98%B6%E6%AE%B5%EF%BC%88Airspeed-Landing%EF%BC%89"><span class="toc-number">1.5.</span> <span class="toc-text">空速着陆阶段（Airspeed Landing）</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E7%9D%80%E9%99%86%E9%98%B6%E6%AE%B5%EF%BC%88Landing%EF%BC%89"><span class="toc-number">1.6.</span> <span class="toc-text">着陆阶段（Landing）</span></a></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#%E7%81%AB%E7%AE%AD%E5%85%AD%E9%98%B6%E6%AE%B5%E8%BF%90%E5%8A%A8%E4%BB%BF%E7%9C%9F%E6%96%B9%E7%A8%8B%EF%BC%88%E5%88%9A%E4%BD%93%E7%89%A9%E7%90%86-%E7%A9%BA%E6%B0%94%E5%8A%A8%E5%8A%9B%E5%AD%A6%EF%BC%89"><span class="toc-number">2.</span> <span class="toc-text">火箭六阶段运动仿真方程（刚体物理 + 空气动力学）</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E7%81%AB%E7%AE%AD%E6%A8%A1%E5%9E%8B%E5%81%87%E8%AE%BE"><span class="toc-number">2.1.</span> <span class="toc-text">火箭模型假设</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E7%81%AB%E7%AE%AD%E6%A8%A1%E5%9E%8B%E5%8F%82%E6%95%B0"><span class="toc-number">2.2.</span> <span class="toc-text">火箭模型参数</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%85%AD%E9%98%B6%E6%AE%B5%E8%BF%90%E5%8A%A8%E6%96%B9%E7%A8%8B"><span class="toc-number">2.3.</span> <span class="toc-text">六阶段运动方程</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#1-%E5%8F%91%E5%B0%84%E9%98%B6%E6%AE%B5%EF%BC%88Liftoff%EF%BC%89"><span class="toc-number">2.3.1.</span> <span class="toc-text">1. 发射阶段（Liftoff）</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#2-%E5%80%BE%E6%96%9C%E4%B8%8A%E5%8D%87%E9%98%B6%E6%AE%B5%EF%BC%88Inclined-Ascent%EF%BC%89"><span class="toc-number">2.3.2.</span> <span class="toc-text">2. 倾斜上升阶段（Inclined Ascent）</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#3-%E9%87%8D%E5%8A%9B%E8%BD%AC%E5%BC%AF%E9%98%B6%E6%AE%B5%EF%BC%88Gravity-Turn%EF%BC%89"><span class="toc-number">2.3.3.</span> <span class="toc-text">3. 重力转弯阶段（Gravity Turn）</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#4-%E6%8E%A8%E8%BF%9B%E5%89%82%E8%80%97%E5%B0%BD%E9%98%B6%E6%AE%B5%EF%BC%88Burnout%EF%BC%89"><span class="toc-number">2.3.4.</span> <span class="toc-text">4. 推进剂耗尽阶段（Burnout）</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#5-%E8%87%AA%E7%94%B1%E9%A3%9E%E8%A1%8C%E9%98%B6%E6%AE%B5%EF%BC%88Free-Flight%EF%BC%89"><span class="toc-number">2.3.5.</span> <span class="toc-text">5. 自由飞行阶段（Free Flight）</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#6-%E9%99%8D%E8%90%BD%E9%98%B6%E6%AE%B5%EF%BC%88Descent%EF%BC%89"><span class="toc-number">2.3.6.</span> <span class="toc-text">6. 降落阶段（Descent）</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#XYZ-%E4%B8%89%E8%BD%B4%E8%BF%90%E5%8A%A8%E6%96%B9%E7%A8%8B"><span class="toc-number">2.4.</span> <span class="toc-text">XYZ 三轴运动方程</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#1-%E4%B8%89%E8%BD%B4%E5%8A%A0%E9%80%9F%E5%BA%A6"><span class="toc-number">2.4.1.</span> <span class="toc-text">1. 三轴加速度</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#2-%E4%B8%89%E8%BD%B4%E9%80%9F%E5%BA%A6"><span class="toc-number">2.4.2.</span> <span class="toc-text">2. 三轴速度</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#3-%E4%B8%89%E8%BD%B4%E4%BD%8D%E7%9F%A2"><span class="toc-number">2.4.3.</span> <span class="toc-text">3. 三轴位矢</span></a></li></ol></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#%E7%A8%8B%E5%BA%8F%E5%88%9D%E6%AD%A5%E4%BB%BF%E7%9C%9F"><span class="toc-number">3.</span> <span class="toc-text">程序初步仿真</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%85%B7%E4%BD%93%E6%A8%A1%E6%8B%9F%E7%A8%8B%E5%BA%8F%E5%A6%82%E4%B8%8B%EF%BC%9A"><span class="toc-number">3.1.</span> <span class="toc-text">具体模拟程序如下：</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E8%AF%A5%E7%A8%8B%E5%BA%8F%E7%9A%84%E7%BC%BA%E7%82%B9%EF%BC%9A"><span class="toc-number">3.2.</span> <span class="toc-text">该程序的缺点：</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E6%8F%90%E5%8D%87%E7%A9%BA%E9%97%B4%EF%BC%9A"><span class="toc-number">3.3.</span> <span class="toc-text">提升空间：</span></a></li></ol></li></ol></div></div><div class="card-widget card-recent-post"><div class="item-headline"><i class="fas fa-history"></i><span>最新文章</span></div><div class="aside-list"><div class="aside-list-item no-cover"><div class="content"><a class="title" href="/posts/54962.html" title="修改butterfly的主题，加入latex数学公式渲染引擎">修改butterfly的主题，加入latex数学公式渲染引擎</a><time datetime="2025-03-14T16:31:21.705Z" title="更新于 2025-03-15 00:31:21">2025-03-15</time></div></div><div class="aside-list-item"><a class="thumbnail" href="/posts/1baa34af.html" title="为网页添加SEO优化以及将butterfly的背景统一"><img src="https://image-host-for-meta.oss-cn-hangzhou.aliyuncs.com/blog-img/2025-02-01-170854.jpg" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="为网页添加SEO优化以及将butterfly的背景统一"/></a><div class="content"><a class="title" href="/posts/1baa34af.html" title="为网页添加SEO优化以及将butterfly的背景统一">为网页添加SEO优化以及将butterfly的背景统一</a><time datetime="2025-03-14T16:31:21.705Z" title="更新于 2025-03-15 00:31:21">2025-03-15</time></div></div><div class="aside-list-item no-cover"><div class="content"><a class="title" href="/posts/16107.html" title="Hello World">Hello World</a><time datetime="2025-03-14T16:31:21.705Z" title="更新于 2025-03-15 00:31:21">2025-03-15</time></div></div><div class="aside-list-item"><a class="thumbnail" href="/posts/c43560d9.html" title="低空落点预测具体方案(草稿)"><img src="https://hkxb.buaa.edu.cn/fileup/1000-6893/FIGURE/2023-44-14/Images/1000-6893-2023-44-14-327964/95AB6966-1C41-41e6-ABF0-9222BCB5ADE1-F001.jpg" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="低空落点预测具体方案(草稿)"/></a><div class="content"><a class="title" href="/posts/c43560d9.html" title="低空落点预测具体方案(草稿)">低空落点预测具体方案(草稿)</a><time datetime="2025-03-14T16:31:21.705Z" title="更新于 2025-03-15 00:31:21">2025-03-15</time></div></div><div class="aside-list-item no-cover"><div class="content"><a class="title" href="/posts/c72ae656.html" title="复刻三国杀">复刻三国杀</a><time datetime="2025-03-14T16:31:21.705Z" title="更新于 2025-03-15 00:31:21">2025-03-15</time></div></div></div></div></div></div></main><footer id="footer" style="background: transparent"><footer id="footer" style="background: transparent"><div id="footer_icons"><div><a class="icon_link" target="_blank" rel="noopener external nofollow" href="https://www.teslongxiao.cn/about" title="关于我"><i class="fa-solid fa-compass"></i></a><a class="icon_link" target="_blank" rel="noopener external nofollow" href="https://res.abeim.cn/api/qq/?qq=2040426884" title="联系QQ"><i class="fa-brands fa-qq"></i></a><a class="icon_link" target="_blank" rel="noopener external nofollow" href="mailto:2040426884@qq.com" title="发送邮件"><i class="fa-solid fa-envelope"></i></a></div><img class="footer_logo" src="https://image-host-for-meta.oss-cn-hangzhou.aliyuncs.com/blog-img/aoao.gif" onclick="btf.scrollToDest(0,500)" title="返回顶部"/><div><a class="icon_link" target="_blank" rel="noopener external nofollow" href="https://github.com/META-Xiao" title="Github主页"><i class="fa-brands fa-github"></i></a><a class="icon_link" target="_blank" rel="noopener external nofollow" href="https://space.bilibili.com/332124713" title="哔哩哔哩主页"><i class="fa-brands fa-bilibili"></i></a><a class="icon_link" href="/message/" title="留言"><i class="fa-solid fa-comment"></i></a></div><div id="footer_content"><div class="footer-group"><h3 class="footer-title"></h3><div class="footer-links"><a class="footer-item" href="undefined"></a></div></div></div></div><div id="footer-bottom"><div class="footer-bottom-content"><div class="footer-bottom-left"><span class="copyright">&copy;2024 - 2025 By <a target="_blank" rel="noopener" href="https://www.teslongxiao.cn" title="点击访问&quot;Meta&quot;的主页" style="margin-left:5px">Meta</a></span><div><a class="footer-bottom-link" target="_blank" href="https://icp.gov.moe/?keyword=20250061" rel="noopener external nofollow" title="萌ICP备20250061号">萌ICP备20250061号</a><a class="footer-bottom-link" target="_blank" href="https://v6.51.la/report/overview?comId=510796" rel="noopener external nofollow" title="51LA">统计信息</a></div></div><div class="footer-bottom-right"><div id="runtime" title="已运行时长">本站已运行：0 天 0 时 0 分 0 秒</div><div><a class="footer-bottom-link" target="_blank" href="https://hexo.io/zh-cn/" rel="noopener external nofollow" title="框架">Hexo</a><a class="footer-bottom-link" target="_blank" href="https://butterfly.js.org/" rel="noopener external nofollow" title="主题">Butterfly</a></div><script type="js" src="/js/footer.js"> </script></div></div></div></footer></footer></div><div id="rightside"><div id="rightside-config-hide"><button id="readmode" type="button" title="阅读模式"><i class="fas fa-book-open"></i></button><button id="darkmode" type="button" title="日间和夜间模式切换"><i class="fas fa-adjust"></i></button><button id="hide-aside-btn" type="button" title="单栏和双栏切换"><i class="fas fa-arrows-alt-h"></i></button></div><div id="rightside-config-show"><button id="rightside-config" type="button" title="设置"><i class="fas fa-cog fa-spin"></i></button><button class="close" id="mobile-toc-button" type="button" title="目录"><i class="fas fa-list-ul"></i></button><button id="go-up" type="button" title="回到顶部"><span class="scroll-percent"></span><i class="fas fa-arrow-up"></i></button></div></div><div><script src="/js/utils.js"></script><script src="/js/main.js"></script><script src="https://cdn.jsdelivr.net/npm/node-snackbar/dist/snackbar.min.js"></script><div class="js-pjax"><script>(() => {
+  const loadMathjax = () => {
+    if (!window.MathJax) {
+      window.MathJax = {
+        tex: {
+          inlineMath: [['$', '$'], ['\\(', '\\)']],
+          tags: 'none',
+        },
+        chtml: {
+          scale: 1.1
+        },
+        options: {
+          enableMenu: true,
+          renderActions: {
+            findScript: [10, doc => {
+              for (const node of document.querySelectorAll('script[type^="math/tex"]')) {
+                const display = !!node.type.match(/; *mode=display/)
+                const math = new doc.options.MathItem(node.textContent, doc.inputJax[0], display)
+                const text = document.createTextNode('')
+                node.parentNode.replaceChild(text, node)
+                math.start = {node: text, delim: '', n: 0}
+                math.end = {node: text, delim: '', n: 0}
+                doc.math.push(math)
+              }
+            }, '']
+          }
+        }
+      }
+
+      const script = document.createElement('script')
+      script.src = 'https://cdn.jsdelivr.net/npm/mathjax/es5/tex-mml-chtml.min.js'
+      script.id = 'MathJax-script'
+      script.async = true
+      document.head.appendChild(script)
+    } else {
+      MathJax.startup.document.state(0)
+      MathJax.texReset()
+      MathJax.typesetPromise()
+    }
+  }
+
+  btf.addGlobalFn('encrypt', loadMathjax, 'mathjax')
+  window.pjax ? loadMathjax() : window.addEventListener('load', loadMathjax)
+})()</script><script>(() => {
+  const runMermaid = ele => {
+    window.loadMermaid = true
+    const theme = document.documentElement.getAttribute('data-theme') === 'dark' ? 'dark' : 'default'
+
+    ele.forEach((item, index) => {
+      const mermaidSrc = item.firstElementChild
+      const mermaidThemeConfig = `%%{init:{ 'theme':'${theme}'}}%%\n`
+      const mermaidID = `mermaid-${index}`
+      const mermaidDefinition = mermaidThemeConfig + mermaidSrc.textContent
+
+      const renderFn = mermaid.render(mermaidID, mermaidDefinition)
+      const renderMermaid = svg => {
+        mermaidSrc.insertAdjacentHTML('afterend', svg)
+      }
+
+      // mermaid v9 and v10 compatibility
+      typeof renderFn === 'string' ? renderMermaid(renderFn) : renderFn.then(({ svg }) => renderMermaid(svg))
+    })
+  }
+
+  const codeToMermaid = () => {
+    const codeMermaidEle = document.querySelectorAll('pre > code.mermaid')
+    if (codeMermaidEle.length === 0) return
+
+    codeMermaidEle.forEach(ele => {
+      const preEle = document.createElement('pre')
+      preEle.className = 'mermaid-src'
+      preEle.hidden = true
+      preEle.textContent = ele.textContent
+      const newEle = document.createElement('div')
+      newEle.className = 'mermaid-wrap'
+      newEle.appendChild(preEle)
+      ele.parentNode.replaceWith(newEle)
+    })
+  }
+
+  const loadMermaid = () => {
+    if (true) codeToMermaid()
+    const $mermaid = document.querySelectorAll('#article-container .mermaid-wrap')
+    if ($mermaid.length === 0) return
+
+    const runMermaidFn = () => runMermaid($mermaid)
+    btf.addGlobalFn('themeChange', runMermaidFn, 'mermaid')
+    window.loadMermaid ? runMermaidFn() : btf.getScript('https://cdn.jsdelivr.net/npm/mermaid/dist/mermaid.min.js').then(runMermaidFn)
+  }
+
+  btf.addGlobalFn('encrypt', loadMermaid, 'mermaid')
+  window.pjax ? loadMermaid() : document.addEventListener('DOMContentLoaded', loadMermaid)
+})()</script></div><script charset="UTF-8" id="LA_COLLECT" src="https://sdk.51.la/js-sdk-pro.min.js"></script><script src="https://sdk.51.la/perf/js-sdk-perf.min.js" crossorigin="anonymous"></script><script>LA.init({id:"3L3LMrlEa92UPmXV",ck:"3L3LMrlEa92UPmXV"})</script><script>new LingQue.Monitor().init({id:"3L4UsWErO5jKfAwH",sendSuspicious:true});</script><script defer src="/js/footer.js"></script><script src="https://cdn.jsdelivr.net/npm/pjax/pjax.min.js"></script><script>(() => {
+  const pjaxSelectors = ["head > title","#config-diff","#body-wrap","#rightside-config-hide","#rightside-config-show",".js-pjax"]
+
+  window.pjax = new Pjax({
+    elements: 'a:not([target="_blank"])',
+    selectors: pjaxSelectors,
+    cacheBust: false,
+    analytics: false,
+    scrollRestoration: false
+  })
+
+  const triggerPjaxFn = (val) => {
+    if (!val) return
+    Object.values(val).forEach(fn => fn())
+  }
+
+  document.addEventListener('pjax:send', () => {
+    // removeEventListener
+    btf.removeGlobalFnEvent('pjaxSendOnce')
+    btf.removeGlobalFnEvent('themeChange')
+
+    // reset readmode
+    const $bodyClassList = document.body.classList
+    if ($bodyClassList.contains('read-mode')) $bodyClassList.remove('read-mode')
+
+    triggerPjaxFn(window.globalFn.pjaxSend)
+  })
+
+  document.addEventListener('pjax:complete', () => {
+    btf.removeGlobalFnEvent('pjaxCompleteOnce')
+    document.querySelectorAll('script[data-pjax]').forEach(item => {
+      const newScript = document.createElement('script')
+      const content = item.text || item.textContent || item.innerHTML || ""
+      Array.from(item.attributes).forEach(attr => newScript.setAttribute(attr.name, attr.value))
+      newScript.appendChild(document.createTextNode(content))
+      item.parentNode.replaceChild(newScript, item)
+    })
+
+    triggerPjaxFn(window.globalFn.pjaxComplete)
+  })
+
+  document.addEventListener('pjax:error', e => {
+    if (e.request.status === 404) {
+      pjax.loadUrl('/404.html')
+    }
+  })
+})()</script><script async data-pjax src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script></div></body></html>
